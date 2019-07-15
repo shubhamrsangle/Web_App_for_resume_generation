@@ -1,0 +1,35 @@
+{
+  "name": "web_app_for_resume_generation",
+  "version": "1.0.0",
+  "description": "Web app for generating resume",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubhamrsangle/Web_App_for_resume_generation.git"
+  },
+  "author": "IIT Tirupati",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubhamrsangle/Web_App_for_resume_generation/issues"
+  },
+  "homepage": "https://github.com/shubhamrsangle/Web_App_for_resume_generation#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
