@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import DynamicForm from './components/DynamicForm/form';
 
 import './App.css';
