@@ -8,7 +8,7 @@ export default class educationdetails extends Component {
 			{
 				id: 0,
 				programme: "",
-				institue: "",
+				institute: "",
 				year: "",
 				marks: "" 
 			}
@@ -19,17 +19,38 @@ export default class educationdetails extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
-				{fields.map( ({id,programme,year,marks,institute}) => (
-					<div className="form-inline" key={id}>
-						<input type="text" className="form-control" name={"programme"} placeholder="Programme"/>
-						<input type="text" className="form-control" name={"institute"} placeholder="Institute"/>
-						<input type="text" className="form-control" name={"year"} placeholder="Year"/>
-						<input type="text" className="form-control" name={"marks"} placeholder="%/CGPA"/>
+				{fields.map( (field) => (
+					<div className="form-inline" key={field.id}>
+						<input type="text" className="form-control" name={"programme"} placeholder="Programme"
+							onChange = { (e) => {
+								field.programme = e.target.value;
+								this.props.educationdetailsData(fields);
+							} }
+						/>
+						<input type="text" className="form-control" name={"institute"} placeholder="Institute"
+							onChange = { (e) => {
+								field.institute = e.target.value;
+								this.props.educationdetailsData(fields);
+							} }
+						/>
+						<input type="text" className="form-control" name={"year"} placeholder="Year"
+							onChange = { (e) => {
+								field.year = e.target.value;
+								this.props.educationdetailsData(fields);
+							} }
+						/>
+						<input type="text" className="form-control" name={"marks"} placeholder="%/CGPA"
+							onChange = { (e) => {
+								field.marks = e.target.value;
+								this.props.educationdetailsData(fields);
+							} }
+						/>
 						<button className="btn btn-default btn-danger" onClick={ (e) => {
 							e.preventDefault();
 							this.setState(state => ({
-								fields: state.fields.filter(field => field.id !== id)
+								fields: state.fields.filter(f => f.id !== field.id)
 							}));
+							this.props.educationdetailsData(this.state.fields.filter(f => f.id!==field.id));
 						} }>Remove</button>
 					</div>	
 					) )}
@@ -38,7 +59,7 @@ export default class educationdetails extends Component {
 					var newField = {
 							id: this.state.nfields,
 							programme: "",
-							institue: "",
+							institute: "",
 							year: "",
 							marks: "" 
 						};
