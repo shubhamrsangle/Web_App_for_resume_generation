@@ -1,53 +1,63 @@
-import React, {Component,Fragment} from 'react';
+import React from 'react';
 
-export default class educationdetails extends Component {	
+class Nandha extends React.Component {
+  constructor(props) {
+    super(props);
 
-	state = {
-		nfields : 1,
-		fields : [
-			{
-				id: 0,
+    this.state = {
 				programme: "",
-				institue: "",
+				institute: "",
 				year: "",
-				marks: "" 
+				marks: ""
 			}
-		]
-	}
+  }
 
-	render() {
-		const { fields } = this.state;
-		return (
-			<Fragment>
-				{fields.map( ({id,programme,year,marks,institute}) => (
-					<div className="form-inline" key={id}>
-						<input type="text" className="form-control" name={"programme"} placeholder="Programme"/>
-						<input type="text" className="form-control" name={"institute"} placeholder="Institute"/>
-						<input type="text" className="form-control" name={"year"} placeholder="Year"/>
-						<input type="text" className="form-control" name={"marks"} placeholder="%/CGPA"/>
-						<button className="btn btn-default btn-danger" onClick={ (e) => {
-							e.preventDefault();
-							this.setState(state => ({
-								fields: state.fields.filter(field => field.id !== id)
-							}));
-						} }>Remove</button>
-					</div>	
-					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
-					e.preventDefault();
-					var newField = {
-							id: this.state.nfields,
-							programme: "",
-							institue: "",
-							year: "",
-							marks: "" 
-						};
-					this.setState(state => ({
-						nfields : state.nfields + 1,
-						fields: [...state.fields,newField]
-					}));
-				}}>Add</button>
-			</Fragment>
-		)
-	}
+  eventHandler = (e) => {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  submit = (event) => {
+    event.preventDefault();
+    const body = this.state;
+    this.props.submit(body);
+  }
+
+  render() {
+
+    return(
+      <div className="row">
+        <div className="col-12">
+          <p>Add a Name</p>
+          <ol>
+            {
+              this.props.fields.map((nan)=>{
+                return(<li>{nan.toString()}</li>);
+              })
+            }
+          </ol>
+          <button onClick={this.props.toggle} className={this.props.addState ? "btn-danger":"btn-primary"}>
+              {this.props.addState ? "Cancel":"Add"}
+          </button>
+          {
+            this.props.addState ?
+            <React.Fragment>
+              <form onSubmit={this.submit} id="experience">
+              <input type="text" className="form-control" name={"programme"} placeholder="Programme"
+							  onChange={this.eventHandler}/>
+              <input type="text" className="form-control" name={"institute"} placeholder="Institute"
+                onChange = {this.eventHandler}/>
+              <input type="text" className="form-control" name={"year"} placeholder="Year"
+                onChange = {this.eventHandler}/>
+              <input type="text" className="form-control" name={"marks"} placeholder="%/CGPA"
+                onChange = {this.eventHandler}/>
+              <input type="submit"/>
+              </form>
+            </React.Fragment>: <React.Fragment></React.Fragment>
+          }
+        </div>
+      </div>
+    );
+  }
 }
+
+export default Nandha;
