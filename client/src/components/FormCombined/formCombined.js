@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicDetails from '../Basic/basic';
-import EducationDetails from '../EducationDetails/educationDetails';
+import EducationDetails from '../EducationDetails/educationdetails';
 
 export default class Form extends React.Component {
 
