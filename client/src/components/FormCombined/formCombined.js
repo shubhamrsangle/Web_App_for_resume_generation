@@ -1,21 +1,21 @@
 import React from 'react';
 import BasicDetails from '../Basic/basic';
 import EducationDetails from '../EducationDetails/educationDetails';
+import {UncontrolledCollapse,Button, CardBody, Card, CardHeader} from 'reactstrap';
 
 export default class Form extends React.Component {
 
   state = {
     basicAddState: true,
-    eduAddState: true,
     eduFields: [],
     basicDetails: []
   }
 
-  //Toggler for education details
-  eduToggle = () => {
-    this.setState({
-      eduAddState: !this.state.eduAddState
-    });
+
+  removeFunc = (index) => {
+    var array = [...this.state.eduFields];
+    array.splice(index,1);
+    this.setState({eduFields:array});
   }
 
   //Toggle function template for functions
@@ -59,8 +59,23 @@ export default class Form extends React.Component {
   render() {
     return(
       <React.Fragment>
-        <BasicDetails fields={this.state.basicDetails} addState={this.state.basicAddState} submit={this.basicSubmitHandler}/>
-        <EducationDetails fields={this.state.eduFields} addState={this.state.eduAddState} toggle={this.eduToggle} submit={this.eduSubmitHandler}/>
+      <Card>
+        <CardHeader>
+        <button className="btn btn-link" id="basicDetails">Basic Details</button>
+        </CardHeader>
+        <UncontrolledCollapse toggler="#basicDetails"><CardBody>
+              <BasicDetails fields={this.state.basicDetails} addState={this.state.basicAddState} submit={this.basicSubmitHandler}/>
+            </CardBody></UncontrolledCollapse>
+        </Card>
+
+        <Card>
+          <CardHeader>
+          <button className="btn btn-link" id="eduDetails">Education Details</button>
+          </CardHeader>
+          <UncontrolledCollapse toggler="#eduDetails"><CardBody>
+                <EducationDetails fields={this.state.eduFields} submit={this.eduSubmitHandler} removeFunc={this.removeFunc}/>
+              </CardBody></UncontrolledCollapse>
+          </Card>
         <button onClick={this.func}>Submit</button>
       </React.Fragment>
     );

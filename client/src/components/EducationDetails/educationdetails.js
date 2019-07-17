@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 class Nandha extends React.Component {
   constructor(props) {
@@ -8,17 +9,22 @@ class Nandha extends React.Component {
 				programme: "",
 				institute: "",
 				year: "",
-				marks: ""
+				marks: "",
+        modal: false
 			}
+  }
+
+  toggle = () => {
+    this.setState(prevState => ({modal: !prevState.modal}));
   }
 
   eventHandler = (e) => {
     this.setState({[e.target.name]: e.target.value})
   }
-
   submit = (event) => {
     event.preventDefault();
     const body = this.state;
+    this.setState({modal:false});
     this.props.submit(body);
   }
 
@@ -27,33 +33,50 @@ class Nandha extends React.Component {
     return(
       <div className="row">
         <div className="col-12">
-          <p>Add a Name</p>
           <ol>
             {
-              this.props.fields.map((nan)=>{
-                return(<li>{nan.toString()}</li>);
+              this.props.fields.map((nan,index)=>{
+                return(
+                  <div className="card" key={index}>
+                    <div className="card-header">
+                      <p>Experience No:{index}</p>
+                    </div>
+                    <div className="card-body">
+                      <p>{nan.programme}</p>
+                      <button onClick={() => {console.log("done");
+                        this.props.removeFunc(0);
+                        console.log("done Again");
+                    }}>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+            );
               })
             }
           </ol>
-          <button onClick={this.props.toggle} className={this.props.addState ? "btn-danger":"btn-primary"}>
-              {this.props.addState ? "Cancel":"Add"}
-          </button>
-          {
-            this.props.addState ?
-            <React.Fragment>
-              <form onSubmit={this.submit} id="experience">
-              <input type="text" className="form-control" name={"programme"} placeholder="Programme"
-							  onChange={this.eventHandler}/>
-              <input type="text" className="form-control" name={"institute"} placeholder="Institute"
-                onChange = {this.eventHandler}/>
-              <input type="text" className="form-control" name={"year"} placeholder="Year"
-                onChange = {this.eventHandler}/>
-              <input type="text" className="form-control" name={"marks"} placeholder="%/CGPA"
-                onChange = {this.eventHandler}/>
-              <input type="submit"/>
-              </form>
-            </React.Fragment>: <React.Fragment></React.Fragment>
-          }
+          <div>
+          <Button color="primary" onClick={this.toggle}>Add</Button>
+       <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+         <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+         <ModalBody>
+         <form onSubmit={this.submit} id="experience" name="experience">
+         <input type="text" className="form-control" name={"programme"} placeholder="Programme"
+           onChange={this.eventHandler}/>
+         <input type="text" className="form-control" name={"institute"} placeholder="Institute"
+           onChange = {this.eventHandler}/>
+         <input type="text" className="form-control" name={"year"} placeholder="Year"
+           onChange = {this.eventHandler}/>
+         <input type="text" className="form-control" name={"marks"} placeholder="%/CGPA"
+           onChange = {this.eventHandler}/>
+         </form>
+         </ModalBody>
+         <ModalFooter>
+            <button type="submit" form="experience">Submit</button>
+           <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+         </ModalFooter>
+       </Modal>
+       </div>
         </div>
       </div>
     );
