@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "npm install --prefix client",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "nodemon server/server.js",
+    "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/shubhamrsangle/Web_App_for_resume_generation#readme",
   "dependencies": {
+    "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.1",
     "cors": "^2.8.5",
