@@ -1,0 +1,23 @@
+.PUB {
+    margin-left: 50px;
+    margin-top: 100px;
+    font-size: 20px;
+}
+.PUB-form-control {
+    margin-top: 20px;
+    padding: 5px 5px;
+    border-radius: 0.15cm;
+}
+.PUB-form-control-1 {
+    margin-top: 20px;
+    margin-right: 20px;
+    padding: 5px 5px;
+    border-radius: 0.15cm;
+    height: 250px;
+    width: 300px;
+}
+.PUB-add {
+    margin-top: 40px; 
+    margin-left: 300px;
+    margin-bottom: 10px;
+}
