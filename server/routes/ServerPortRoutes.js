@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');	
 const app = express();
 const ServerPortRouter = express.Router();
 app.use('/serverport', ServerPortRouter);
@@ -20,9 +20,10 @@ ServerPortRouter.route('/').post(function (req, res) {
 	//Piping out object
 	pdf.pipe(output);
 	pdf.on('error', err => console.error(err));
-	pdf.on('finish', () => console.log('PDF generated!'));
-	
-	res.send(pdf);
+	pdf.on('finish', () => {
+		console.log('PDF generated!');
+		res.send('PDF Generated...!');
+	});
 });
 
 
