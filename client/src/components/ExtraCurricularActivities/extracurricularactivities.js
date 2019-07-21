@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './extracurricularactivities.css';
 export default class extracurricularactivities extends Component {	
 
 	state = {
@@ -16,9 +16,10 @@ export default class extracurricularactivities extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "EXC"> Extra Curricular Activies: </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<textarea name={"activity"} placeholder="Extra Curricular Activity"
+						<textarea name={"activity"} placeholder="Extra Curricular Activity" className = "EXC-form-control-1"
 							onChange = { (e) => {
 								field.activity = e.target.value;
 								this.props.extracurricularactivitiesData(fields);
@@ -33,7 +34,7 @@ export default class extracurricularactivities extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary EXC-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,

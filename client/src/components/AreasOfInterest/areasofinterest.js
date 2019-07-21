@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './areasofinterest.css';
 export default class areasofinterest extends Component {	
 
 	state = {
@@ -16,9 +16,10 @@ export default class areasofinterest extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "AOD"> Areas of Interest </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<input type="text" className="form-control" name={"interest"} placeholder="Area Of Inteest"
+						<input type="text" className="form-control" name={"interest"} placeholder="Area Of Interest"
 							onChange = { (e) => {
 								field.interest = e.target.value;
 								this.props.areasofinterestData(fields);
@@ -33,7 +34,7 @@ export default class areasofinterest extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary AOF-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,

@@ -1,0 +1,28 @@
+.TP {
+    margin-left: 50px;
+    margin-top: 100px;
+    font-size: 20px;
+}
+
+.TP-title {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 30px;
+    border-radius: 0.15cm;
+    padding: 5px;
+}
+
+.TP-value {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 40px;
+    border-radius: 0.15cm;
+    height: 150px;
+    width: 300px;
+    padding: 5px;
+}
+.TP-add {
+    margin-top: 40px; 
+    margin-left: 300px;
+    margin-bottom: 10px;
+}

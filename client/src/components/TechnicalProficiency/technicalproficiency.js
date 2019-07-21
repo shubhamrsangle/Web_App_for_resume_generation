@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './technicalproficiency.css';
 export default class technicalproficiency extends Component {	
 
 	state = {
@@ -17,15 +17,16 @@ export default class technicalproficiency extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "TP"> Technical Proficiency: </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<input type="text" className="form-control" name={"title"} placeholder="Title"
+						<input type="text" className="TP-title" name={"title"} placeholder="Title"
 							onChange = { (e) => {
 								field.title = e.target.value;
 								this.props.technicalproficiencyData(fields);
 							} }
 						/>
-						<textarea name={"titlevalue"} placeholder="Value"
+						<textarea name={"titlevalue"} placeholder="Value" className = "TP-value"
 							onChange = { (e) => {
 								field.titlevalue = e.target.value;
 								this.props.technicalproficiencyData(fields);
@@ -40,7 +41,7 @@ export default class technicalproficiency extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary TP-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,

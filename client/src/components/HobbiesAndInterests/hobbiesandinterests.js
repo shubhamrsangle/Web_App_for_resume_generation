@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './hobbiesandinterests.css';
 export default class hobbiesandinterests extends Component {	
 
 	state = {
@@ -16,9 +16,10 @@ export default class hobbiesandinterests extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "HAI"> Hobbies and Interest: </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<textarea name={"hobby"} placeholder="Hobby or Interest"
+						<textarea name={"hobby"} placeholder="Hobby or Interest" className = "HAI-form-control-1"
 							onChange = { (e) => {
 								field.hobby = e.target.value;
 								this.props.hobbiesandinterestsData(fields);
@@ -33,7 +34,7 @@ export default class hobbiesandinterests extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary HAI-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,

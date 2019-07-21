@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './experience.css';
 export default class experience extends Component {	
 
 	state = {
@@ -19,27 +19,36 @@ export default class experience extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "EP"> Experience: </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<input type="text" className="form-control" name={"experience"} placeholder="Experience"
-							onChange = { (e) => {
-								field.experience = e.target.value;
-								this.props.experienceData(fields);
-							} }
-						/>
-						<input type="text" className="form-control" name={"expduration"} placeholder="Duration(From-To)"
-							onChange = { (e) => {
-								field.expduration = e.target.value;
-								this.props.experienceData(fields);
-							} }
-						/>
-						<input type="text" className="form-control" name={"expguide"} placeholder="Guide(if any)"
-							onChange = { (e) => {
-								field.expguide = e.target.value;
-								this.props.experienceData(fields);
-							} }
-						/>
-						<textarea name={"expdescription"} placeholder="About Experience"
+						<div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="EP-form-control" name={"experience"} placeholder="Experience"
+									onChange = { (e) => {
+										field.experience = e.target.value;
+										this.props.experienceData(fields);
+									} }
+								/>
+							</div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="EP-form-control" name={"expduration"} placeholder="Duration(From-To)"
+									onChange = { (e) => {
+										field.expduration = e.target.value;
+										this.props.experienceData(fields);
+									} }
+								/>
+							</div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="EP-form-control" name={"expguide"} placeholder="Guide(if any)"
+									onChange = { (e) => {
+										field.expguide = e.target.value;
+										this.props.experienceData(fields);
+									} }
+								/>
+							</div>
+						</div>
+						<textarea name={"expdescription"} placeholder="About Experience" className = "EP-form-control-1"
 							onChange = { (e) => {
 								field.expdescription = e.target.value;
 								this.props.experienceData(fields);
@@ -54,7 +63,7 @@ export default class experience extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary EP-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,

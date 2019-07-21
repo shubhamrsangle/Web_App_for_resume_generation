@@ -12,7 +12,7 @@ import PositionsOfResponsibility from '../PositionsOfResponsibility/positionsofr
 import ExtraCurricularActivities from '../ExtraCurricularActivities/extracurricularactivities';
 import HobbiesAndInterests from '../HobbiesAndInterests/hobbiesandinterests';
 import axios from 'axios';
-
+import './form.css';
 
 export default class form extends Component {
 

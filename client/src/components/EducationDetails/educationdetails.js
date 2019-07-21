@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './educationdetails.css';
 export default class educationdetails extends Component {	
 
 	state = {
@@ -19,6 +19,9 @@ export default class educationdetails extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "edu-details">
+					Education details:
+				</div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
 						<input type="text" className="form-control" name={"programme"} placeholder="Programme"

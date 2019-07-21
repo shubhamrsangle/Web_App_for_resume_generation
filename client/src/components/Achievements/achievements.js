@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './achievements.css';
 export default class achievements extends Component {	
 
 	state = {
@@ -16,6 +16,7 @@ export default class achievements extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "AM"> Achievements: </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
 						<input type="text" className="form-control" name={"achievement"} placeholder="Achievement"
@@ -33,7 +34,7 @@ export default class achievements extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary AM-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,

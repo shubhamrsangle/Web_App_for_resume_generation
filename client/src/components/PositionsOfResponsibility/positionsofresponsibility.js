@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './positionsofresponsibility.css';
 export default class positionsofresponsibility extends Component {	
 
 	state = {
@@ -18,21 +18,28 @@ export default class positionsofresponsibility extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "POS"> Positions of Resposibility: </div> 
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<input type="text" className="form-control" name={"position"} placeholder="Position"
-							onChange = { (e) => {
-								field.position = e.target.value;
-								this.props.positionsofresponsibilityData(fields);
-							} }
-						/>
-						<input type="text" className="form-control" name={"posduration"} placeholder="Duration(From-To)"
-							onChange = { (e) => {
-								field.posduration = e.target.value;
-								this.props.positionsofresponsibilityData(fields);
-							} }
-						/>
-						<textarea name={"workdescription"} placeholder="Work Done"
+						<div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="POS-form-control" name={"position"} placeholder="Position"
+									onChange = { (e) => {
+										field.position = e.target.value;
+										this.props.positionsofresponsibilityData(fields);
+									} }
+								/>
+							</div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="POS-form-control" name={"posduration"} placeholder="Duration(From-To)"
+									onChange = { (e) => {
+										field.posduration = e.target.value;
+										this.props.positionsofresponsibilityData(fields);
+									} }
+								/>
+							</div>
+						</div>
+						<textarea name={"workdescription"} placeholder="Work Done" className = "POS-form-control-1"
 							onChange = { (e) => {
 								field.workdescription = e.target.value;
 								this.props.positionsofresponsibilityData(fields);
@@ -47,7 +54,7 @@ export default class positionsofresponsibility extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary POS-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,
