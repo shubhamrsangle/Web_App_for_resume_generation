@@ -1,0 +1,116 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=0.75in, right=0.75in, top=0.5in, bottom=0.75in, includefoot, headheight=13.6pt]{geometry}
+\usepackage{color,graphicx}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{latexsym}
+\usepackage{mdwlist}
+\usepackage{tabularx}
+\renewcommand{\labelitemii}{$\circ$}
+
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat's bookmarks
+    pdftoolbar=true,        % show Acrobat's toolbar?
+    pdfmenubar=true,        % show Acrobat's menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={CV - XYZ},    % title
+    pdfauthor={Newton},     % author
+    pdfsubject={Placements IITTP},   % subject of the document
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=magenta,        % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+% Margines
+
+\addtolength{\oddsidemargin}{-0.215in}
+\addtolength{\textwidth}{0.2in}
+
+\definecolor{titleColor}{rgb}{0.85, 0.85, 0.85}
+
+\begin{document}
+
+%%%%%%%%% vertical space %%%%%%%%%%%%%%%%%
+
+\begin{table}[h!]
+     \begin{center}
+     \begin{tabular}{  l  p{10cm}  p{8cm}}
+	 \raisebox{-\totalheight}{\includegraphics[scale=.2]{C:/Users/nandha/Desktop/master/Web_App_for_resume_generation/server/routes/logoupdated.png}}
+	 &
+	 \begin{itemize}
+	 \setlength\itemsep{.01em}
+%Add Personal Details
+	\end{itemize}
+
+ 	 \end{tabular}
+	 \end{center}
+     \end{table}
+
+\vspace{-.8cm}
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Education Details}}}
+\\ \\
+%\begin{table}[ht!]
+%\begin{center}
+\indent \begin{tabular}{ l @{\hskip 0.65in} l @{\hskip 0.90in} l @{\hskip 1.00in} l @{\hskip 0.27in} l }
+\hline
+\textbf{Program} & \textbf{Institute} & \textbf{Year} & \textbf{\%/CGPA} \\
+\hline
+%Add Education Details
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Areas of Interest}}}
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Areas of Interest
+ \end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Technical Proficiency}}}\\
+\begin{tabular}{p{1.6in}p{0.1in}p{4.5in}}
+%Add Technical Proficiency
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Academic Projects}}}
+%Add Academic Projects
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Experience}}}
+%Add Experiences
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Relevant Courses}}}\\[0.08in]
+\begin{tabular}{p{3.5in}p{3in}p{2.5in}}
+%Add Relevant Courses
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Achievements}}}\\[0.08in]
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Achievements
+\end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Positions of Responsibility}}}\\
+%Add Positions of Responsibility
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Extra Curricular activities}}}
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Activities
+\end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Hobbies and Interests}}}
+%\vspace{0.5 pt}
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Hobbies
+\end{itemize}
+
+\textit{Updated on 22nd Jun 2020}
+\end{document}

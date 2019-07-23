@@ -1,0 +1,160 @@
+summa
+
+summa
+
+  \item Summa iruppathu
+  \item thoonguvathu
+
+summa
+
+summa
+
+
+
+
+
+\begin{table}[h!]
+     \begin{center}
+     \begin{tabular}{  l  p{10cm}  p{8cm}}
+	 \raisebox{-\totalheight}{\includegraphics[scale=.2]{C:/Users/nandha/Desktop/master/Web_App_for_resume_generation/server/routes/logoupdated.png}}
+	 &
+	 \begin{itemize}
+	 \setlength\itemsep{.01em}
+%Add Personal Details
+	\end{itemize}
+
+ 	 \end{tabular}
+	 \end{center}
+     \end{table}
+
+\vspace{-.8cm}
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Education Details}}}
+\\ \\
+%\begin{table}[ht!]
+%\begin{center}
+\indent \begin{tabular}{ l @{\hskip 0.65in} l @{\hskip 0.90in} l @{\hskip 1.00in} l @{\hskip 0.27in} l }
+\hline
+\textbf{Program} & \textbf{Institute} & \textbf{Year} & \textbf{\%/CGPA} \\
+\hline
+%Add Education Details
+
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Areas of Interest}}}
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Areas of Interest
+ \end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Technical Proficiency}}}\\
+
+\begin{tabular}{p{1.6in}p{0.1in}p{4.5in}}
+%Add Technical Proficiency
+\end{tabular}
+
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Academic Projects}}}
+%Add Academic Projects
+
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Experience}}}
+%Add Experiences
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Relevant Courses}}}\\[0.08in]
+\begin{tabular}{p{3.5in}p{3in}p{2.5in}}
+%Add Relevant Courses
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Achievements}}}\\[0.08in]
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Achievements
+\end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Positions of Responsibility}}}\\
+%Add Positions of Responsibility
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Extra Curricular activities}}}
+
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+%Add Activities
+\end{itemize}
+
+
+
+extraCurricularActivity = () => {
+  return `\\item Activity2 \\hfill {\\small{{[Mar '19]}}\\/}`
+}
+
+positionsOfResponsibility = () => {
+  return `\\textbf{Position, Club/ Event/ Institute}  \\hfill {\\small{{\\textbf{[May '13 - April '14]}}}\\/}\n` +
+  `\\begin{itemize*}\n` +
+  `\\item key role of your position.\n` +
+  `\\item a line or two about your work in that position.\n` +
+  `\\end{itemize*}`
+}
+
+achievement = () => {
+  return `\\item \\textbf{Achievement 2} a line or two about achievement.`;
+}
+
+relevantCourses = () => {
+  return `\\hspace{0.9pc}$\\bullet$ Machine Learning &$\\bullet$ Artificial Intelligence\\\\[0.05in]`
+}
+
+experience = () => {
+  return `\\begin{itemize*}\n` +
+    `\\setlength{\\itemsep}{.00pt}\n` +
+    `\\item \\textbf{{Teacher Assistant, Computer Science Lab, IIT Tirupati}} \\hfill {\\small{{\\textbf{[AUg '18 - Jul '19]}}\\/}} \\\\\n` +
+  `{(Guide : XYZ, IIT Tirupati)}\n` +
+        `\\begin{itemize*}\n` +
+         `\\item Working as a Teaching Assistant for conducting undergraduate lab courses.\n` +
+        `\\end{itemize*}\n` +
+       `\\end{itemize*}`
+}
+
+ServerPortRouter.route('/nandha').post(function (req,res) {
+  const string = "New Row\n";
+  fs.readFile('server/routes/input.txt','utf8', (err, contents) => {
+    if(err) throw err;
+    const lines = contents.split('\n');
+    for (line in lines){
+      if (line in lines) {
+        if(lines[line] === "% Add Experience Json\r"){
+          lines.splice(line,1);
+          index = Number(line);
+          for(var i=0;i<req.body.hobbies.length;i++)
+            lines.splice(index+i,0,hobbies(req.body.hobbies[i]));
+          break;
+        }
+      }
+    }
+
+    contents = lines.join('\n');
+
+    fs.writeFile('server/routes/temp.tex',contents, 'utf8' ,(err) => {
+      if(err) throw err;
+    });
+  });
+  res.json({summa:"summa"});
+});
+
+ServerPortRouter.route('/').post(function (req, res) {
+    console.log(req.body);
+
+    //Input latex file
+    const input = fs.createReadStream(path.join( __dirname , 'template.tex'));
+    //Name of output File
+	const output = fs.createWriteStream(path.join( __dirname , 'templateOutput.pdf'));
+	//Object for pdf generation
+	const pdf = latex(input);
+
+	//Piping out object
+	pdf.pipe(output);
+	pdf.on('error', err => console.error(err));
+	pdf.on('finish', () => {
+		console.log('PDF generated!');
+		res.send('PDF Generated...!');
+	});
+});
