@@ -13,7 +13,9 @@ ServerPortRouter.route('/').post(function (req, res) {
     let raw = req.body;
     console.log("*********************************************************************");
     logopath=path.join(__dirname,'logoupdated.png');
+    logopath=logopath.split('\\').join('/');
     console.log(logopath);
+    console.log("*********************************************************************");
     make(raw);
     
     //Input latex file
@@ -48,6 +50,7 @@ let def2 = "pdffitwindow=true,\npdftitle={CV - XYZ},\n pdfauthor={Newton}, \npdf
 let def3 = "linkcolor=magenta,\ncitecolor=blue,\nfilecolor=magenta,\nurlcolor=cyan\n}\n\n\n";
 let mar = "\\addtolength{\\oddsidemargin}{-0.215in}\n\\addtolength{\\textwidth}{0.2in}\n\\definecolor{titleColor}{rgb}{0.85, 0.85, 0.85}\n\n";
 var logopath=path.join(__dirname,'logoupdated.png');
+logopath = logopath.split('\\').join('/');
 let basic_begin = "\\begin{table}[h!]\n\n\\begin{center}\n\\begin{tabular}{  l  p{10cm}  p{8cm}}\n\\raisebox{-\\totalheight}{\\includegraphics[scale=.2]{"+logopath+"}}\n&\n\\begin{itemize}\n\\setlength\\itemsep{.01em}\n"
 let basic_end = "\\end{itemize}\n\\end{tabular}\n\\end{center}\n\\end{table}\n\n\\vspace{-.8cm}\n\n";
 let educationDetails_begin1 = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Education Details}}}\n\\\\ \\\\\n";
