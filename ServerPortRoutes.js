@@ -14,8 +14,6 @@ ServerPortRouter.route('/').post(function (req, res) {
     console.log(req.body);
     let raw = req.body;
     const fs = require('fs');
-    let data = JSON.stringify(req.body);  
-    fs.writeFileSync('file.json', data);
     res.send({"data":"Data is Received by Server, Frontend-Backend are connected"});
     make(raw);
 });
