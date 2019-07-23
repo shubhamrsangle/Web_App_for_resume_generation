@@ -30,7 +30,7 @@ ServerPortRouter.route('/').post(function (req, res) {
 });
 
 ServerPortRouter.route('/').get(function (req, res) {
-	res.sendFile(path.join(__dirname,'pdfs','output.pdf'));
+	res.download(path.join(__dirname,'pdfs','output.pdf'),'CV.pdf');
 });
 
 
