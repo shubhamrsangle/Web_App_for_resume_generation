@@ -35,8 +35,18 @@ export default class form extends Component {
 		e.preventDefault();
 		console.log(this.state);
 		alert('Check console to see the submitted data using ctrl + shift + i ....');
-		axios.post('http://localhost:4000/serverport',this.state )
-          .then(res => console.log(res));
+		axios.post('http://localhost:4000/pdf',this.state )
+          .then(res => {
+          	if(res.data)
+          	{
+          		alert('File Generated Successfully!!!');
+          		window.open('http://localhost:4000/pdf');
+          	}
+          	else
+          	{
+          		alert('Failed to Generate PDF!!!');
+          	}
+          });
 	}
 
 	hobbiesandinterestsData = (data) => {
