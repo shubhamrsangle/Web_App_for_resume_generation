@@ -36,7 +36,16 @@ export default class form extends Component {
 		console.log(this.state);
 		alert('Check console to see the submitted data using ctrl + shift + i ....');
 		axios.post('http://localhost:4000/serverport',this.state )
-          .then(res => console.log(res));
+          .then(res => {
+          	if(res.data)
+          	{
+          		window.open('http://localhost:4000/serverport');
+          	}
+          	else
+          	{
+          		alert('Resource is Busy!!!Try After Sometimes...');
+          	}
+          });
 	}
 
 	hobbiesandinterestsData = (data) => {

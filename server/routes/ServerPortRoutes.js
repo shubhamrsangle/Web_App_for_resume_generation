@@ -27,13 +27,19 @@ ServerPortRouter.route('/').post(function (req, res) {
 
 	//Piping out object
 	pdf.pipe(output);
-	pdf.on('error', err => console.error(err));
+	pdf.on('error', err => {
+		console.error(err);
+		res.send(false);
+	});
 	pdf.on('finish', () => {
 		console.log('PDF generated!');
-		res.send('PDF Generated...!');
+		res.send(true);
 	});
 });
 
+ServerPortRouter.route('/').get(function (req, res) {
+    res.download(path.join(__dirname,'output.pdf'),'CV.pdf');
+});
 
 
 
