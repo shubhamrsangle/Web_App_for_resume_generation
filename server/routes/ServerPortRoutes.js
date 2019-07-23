@@ -51,7 +51,7 @@ let educationDetails_begin2 = "\\indent \\begin{tabular}{ l @{\\hskip 0.65in} l 
 let educationDetails_begin3 = "\\hline\n\\textbf{Program} & \\textbf{Institute} & \\textbf{Year} & \\textbf{\\%/CGPA} \\\\ \n \\hline\n\n";
 function make(raw) {
     const fs = require('fs');
-    fs.writeFileSync('laTex.tex', str1);
+    fs.writeFileSync('./server/routes/laTex.tex', str1);
     fs.appendFileSync('laTex.tex', str2);
     fs.appendFileSync('laTex.tex', str3);
     fs.appendFileSync('laTex.tex', def1);
@@ -59,17 +59,39 @@ function make(raw) {
     fs.appendFileSync('laTex.tex', def3);
     fs.appendFileSync('laTex.tex', mar);
     fs.appendFileSync('laTex.tex', "\\begin{document}\n\n"); // document begins
-    basic(raw['basic']);
-    educationDetails(raw['educationdetails']);
-    areaOfInterest(raw['areasofinterest']);
-    technicalProficiency(raw['technicalproficiency']);
-    academicProject(raw['academicprojects']);
-    experience(raw['experience']);
-    relevantCourses(raw['courses']);
-    achievements(raw['achievements']);
-    positonsOfResponsibility(raw['positionsofresponsibility']);
-    extraCurricularActivities(raw['extracurricularactivities']);
-    hobbies(raw['hobbiesandinterests']);
+    if(raw['basic']!=null){
+    	 basic(raw['basic']);
+    }
+   	if(raw['educationdetails']){
+    	educationDetails(raw['educationdetails']);
+    }
+    if(raw['areasofinterest']){
+    	areaOfInterest(raw['areasofinterest']);
+    }
+    if(raw['technicalproficiency']){
+    	technicalProficiency(raw['technicalproficiency']);
+    }
+    if(raw['academicprojects']){
+    	academicProject(raw['academicprojects']);
+    }
+    if(raw['experience']){
+    	experience(raw['experience']);
+    }
+    if(raw['courses']){
+    	relevantCourses(raw['courses']);
+    }
+    if(raw['achievements']){
+    	achievements(raw['achievements']);
+    }
+    if(raw['positionsofresponsibility']){
+    	positonsOfResponsibility(raw['positionsofresponsibility']);
+    }
+    if(raw['extracurricularactivities']){
+    	extraCurricularActivities(raw['extracurricularactivities']);
+    }
+    if(raw['hobbiesandinterests']){
+    	hobbies(raw['hobbiesandinterests']);
+    }
     fs.appendFileSync('laTex.tex', "\\end{document}\n"); // document ends
     console.log('JAI HIND');    
 }
