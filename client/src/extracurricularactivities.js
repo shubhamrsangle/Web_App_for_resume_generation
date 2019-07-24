@@ -7,7 +7,8 @@ export default class extracurricularactivities extends Component {
 		fields : [
 			{
 				id: 0,
-				activity: "" 
+				activity: "",
+				excduration: ""
 			}
 		]
 	}
@@ -25,6 +26,12 @@ export default class extracurricularactivities extends Component {
 								this.props.extracurricularactivitiesData(fields);
 							} }
 						/>
+						<input type="text" className="EXC-form-control" name={"excduration"} placeholder="Duration(From-To)"
+							onChange = { (e) => {
+								field.excduration = e.target.value;
+								this.props.extracurricularactivitiesData(fields);
+							} }
+						/>
 						<button className="btn btn-default btn-danger" onClick={ (e) => {
 							e.preventDefault();
 							this.setState(state => ({
@@ -38,7 +45,8 @@ export default class extracurricularactivities extends Component {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,
-							activity: "" 
+							activity: "",
+							excduration: ""
 						};
 					this.setState(state => ({
 						nfields : state.nfields + 1,
