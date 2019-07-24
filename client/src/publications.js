@@ -8,7 +8,9 @@ export default class publications extends Component {
 			{
 				id: 0,
 				pubtitle: "",
+				pubauthors: "",
 				pubplace: "",
+				pubdoi: "",
 				pubdescription: ""
 			}
 		]
@@ -31,9 +33,25 @@ export default class publications extends Component {
 								/>
 							</div>
 							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="PUB-form-control" name={"pubauthors"} placeholder="Authors"
+									onChange = { (e) => {
+										field.pubauthors = e.target.value;
+										this.props.publicationsData(fields);
+									} }
+								/>
+							</div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
 								<input type="text" className="PUB-form-control" name={"pubplace"} placeholder="Place of Publication"
 									onChange = { (e) => {
 										field.pubplace = e.target.value;
+										this.props.publicationsData(fields);
+									} }
+								/>
+							</div>
+							<div style={{padding: '10px 10px',margin:'5px 50px'}}>
+								<input type="text" className="PUB-form-control" name={"pubdoi"} placeholder="DOI"
+									onChange = { (e) => {
+										field.pubdoi = e.target.value;
 										this.props.publicationsData(fields);
 									} }
 								/>
@@ -59,7 +77,9 @@ export default class publications extends Component {
 					var newField = {
 							id: this.state.nfields,
 							pubtitle: "",
+							pubauthors: "",
 							pubplace: "",
+							pubdoi: "",
 							pubdescription: ""
 						};
 					this.setState(state => ({
