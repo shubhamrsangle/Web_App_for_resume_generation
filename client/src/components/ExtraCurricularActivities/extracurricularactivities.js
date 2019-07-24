@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-
+import './extracurricularactivities.css';
 export default class extracurricularactivities extends Component {	
 
 	state = {
@@ -8,7 +8,7 @@ export default class extracurricularactivities extends Component {
 			{
 				id: 0,
 				activity: "",
-				extduration: ""
+				excduration: ""
 			}
 		]
 	}
@@ -17,17 +17,18 @@ export default class extracurricularactivities extends Component {
 		const { fields } = this.state;
 		return (
 			<Fragment>
+				<div className = "EXC"> Extra Curricular Activies: </div>
 				{fields.map( (field) => (
 					<div className="form-inline" key={field.id}>
-						<textarea name={"activity"} placeholder="Extra Curricular Activity"
+						<textarea name={"activity"} placeholder="Extra Curricular Activity" className = "EXC-form-control-1"
 							onChange = { (e) => {
 								field.activity = e.target.value;
 								this.props.extracurricularactivitiesData(fields);
 							} }
 						/>
-						<input type="text" className="form-control" name={"extduration"} placeholder="Duration(From-To)"
+						<input type="text" className="EXC-form-control" name={"excduration"} placeholder="Duration(From-To)"
 							onChange = { (e) => {
-								field.extduration = e.target.value;
+								field.excduration = e.target.value;
 								this.props.extracurricularactivitiesData(fields);
 							} }
 						/>
@@ -40,12 +41,12 @@ export default class extracurricularactivities extends Component {
 						} }>Remove</button>
 					</div>	
 					) )}
-				<button className="btn btn-default btn-primary" onClick={ (e) => {
+				<button className="btn btn-default btn-primary EXC-add" onClick={ (e) => {
 					e.preventDefault();
 					var newField = {
 							id: this.state.nfields,
 							activity: "",
-							extduration: ""
+							excduration: ""
 						};
 					this.setState(state => ({
 						nfields : state.nfields + 1,
