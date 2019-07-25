@@ -191,12 +191,14 @@ function publications(publications) {
     for (let i = 0; i < publications.length; i++) {
         let title = publications[i]['pubtitle'];
         let author = publications[i]['pubauthors'];
+	let place = publications[i]['pubplace'];
         let details = publications[i]['pubdescription'];
         let doi = publications[i]['pubdoi'];
         fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{1pt}\n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\item ${title}\n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\newline Authors: ${author}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline Journal Details: ${details}\n`);
+	fs.appendFileSync('./server/routes/latex.tex', `\\newline Place of Publication: ${place}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline Description: ${details}\n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\newline DOI: ${doi}\n\n`);
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
@@ -309,7 +311,7 @@ function extraCurricularActivities(extraCurricularActivities) {
     \\setlength{\\itemsep}{1pt}\n`);
     for (let i = 0; i < extraCurricularActivities.length; i++) {
         let activity = extraCurricularActivities[i]['activity'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${activity} \\hfill {\\small{{[Mar '19]}}\\/}\n`); // error
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${activity} \\hfill \n`); // error
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
 }
