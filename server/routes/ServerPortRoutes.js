@@ -8,6 +8,7 @@ const latex = require('node-latex');
 const fs = require('fs'); 
 const path = require('path');
 
+
 ServerPortRouter.route('/').post(function (req, res) {
     console.log(req.body);
     let raw = req.body;
@@ -57,8 +58,11 @@ let def3 = "linkcolor=magenta,\ncitecolor=blue,\nfilecolor=magenta,\nurlcolor=cy
 let mar = "\\addtolength{\\oddsidemargin}{-0.215in}\n\\addtolength{\\textwidth}{0.2in}\n\\definecolor{titleColor}{rgb}{0.85, 0.85, 0.85}\n\n";
 var logopath=path.join(__dirname,'logoupdated.png');
 logopath = logopath.split('\\').join('/');
-let basic_begin = "\\begin{table}[h!]\n\n\\begin{center}\n\\begin{tabular}{  l  p{10cm}  p{8cm}}\n\\raisebox{-\\totalheight}{\\includegraphics[scale=.2]{"+logopath+"}}\n&\n\\begin{itemize}\n\\setlength\\itemsep{.01em}\n"
-let basic_end = "\\end{itemize}\n\\end{tabular}\n\\end{center}\n\\end{table}\n\n\\vspace{-.8cm}\n\n";
+let basic_begin = "\\begin{table}[h!]\n\n\\begin{center}\n\\begin{tabular}{ p{1in}p{4.45in}p{0.8in}}\n\\raisebox{-1.05\\totalheight}{\\includegraphics[width=1.5in]{"+logopath+"}}\n&\n\\begin{itemize}\n\\setlength\\itemsep{.01em}\n"
+let basic_end1 = "\\end{itemize}\n"
+let basic_end_photo = `&\n
+\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{passportphoto.jpg}}\n`;
+let basic_end3 = "\\end{tabular}\n\\end{center}\n\\end{table}\n\n\\vspace{-.8cm}\n\n";
 let educationDetails_begin1 = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Education Details}}}\n\\\\ \\\\\n";
 let educationDetails_begin2 = "\\indent \\begin{tabular}{ l @{\\hskip 0.65in} l @{\\hskip 0.90in} l @{\\hskip 1.00in} l @{\\hskip 0.27in} l }\n";
 let educationDetails_begin3 = "\\hline\n\\textbf{Program} & \\textbf{Institute} & \\textbf{Year} & \\textbf{\\%/CGPA} \\\\ \n \\hline\n\n";
@@ -84,6 +88,9 @@ function make(raw) {
     }
     if(raw['technicalproficiency']){
     	technicalProficiency(raw['technicalproficiency']);
+    }
+    if (raw['publications']) {
+        publications(raw['publications']);  // uncomment when publications component is fixed
     }
     if(raw['academicprojects']){
     	academicProject(raw['academicprojects']);
@@ -118,7 +125,9 @@ function basic(basic) {
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"Indian Institute of Technology Tirupati, India"}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${basic['email']}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${basic['linkdinid']}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', basic_end);
+    fs.appendFileSync('./server/routes/latex.tex', basic_end1);
+    //fs.appendFileSync('./server/routes/latex.tex', basic_end_photo);
+    fs.appendFileSync('./server/routes/latex.tex', basic_end3);
 }
 
 function educationDetails(educationDetails) {
@@ -172,6 +181,25 @@ function technicalProficiency(technicalProficiency) {
         fs.appendFileSync('./server/routes/latex.tex', tem);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{tabular}\n\n");
+}
+
+function publications(publications) {
+    const fs = require('fs');
+    let pb = `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Publications}}} \n
+    \\begin{itemize}\n\n`;
+    fs.appendFileSync('./server/routes/latex.tex', pb);
+    for (let i = 0; i < publications.length; i++) {
+        let title = publications[i]['pubtitle'];
+        let author = publications[i]['pubauthors'];
+        let details = publications[i]['pubdescription'];
+        let doi = publications[i]['pubdoi'];
+        fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{1pt}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${title}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline Authors: ${author}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline Journal Details: ${details}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline DOI: ${doi}\n\n`);
+    }
+    fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
 }
 
 function academicProject(academicProject) {
