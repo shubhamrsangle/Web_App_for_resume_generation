@@ -80,37 +80,37 @@ function make(raw) {
     if(raw['basic']!=null){
          basic(raw['basic']);
     }
-    if(raw['educationdetails']){
+    if(raw['educationdetails'].length>0){
         educationDetails(raw['educationdetails']);
     }
-    if(raw['areasofinterest']){
+    if(raw['areasofinterest'].length>0){
         areaOfInterest(raw['areasofinterest']);
     }
-    if(raw['technicalproficiency']){
+    if(raw['technicalproficiency'].length>0){
         technicalProficiency(raw['technicalproficiency']);
     }
-    if (raw['publications']) {
+    if (raw['publications'].length>0) {
         publications(raw['publications']);  // uncomment when publications component is fixed
     }
-    if(raw['academicprojects']){
+    if(raw['academicprojects'].length>0){
         academicProject(raw['academicprojects']);
     }
-    if(raw['experience']){
+    if(raw['experience'].length>0){
         experience(raw['experience']);
     }
-    if(raw['courses']){
+    if(raw['courses'].length>0){
         relevantCourses(raw['courses']);
     }
-    if(raw['achievements']){
+    if(raw['achievements'].length>0){
         achievements(raw['achievements']);
     }
-    if(raw['positionsofresponsibility']){
+    if(raw['positionsofresponsibility'].length>0){
         positonsOfResponsibility(raw['positionsofresponsibility']);
     }
-    if(raw['extracurricularactivities']){
+    if(raw['extracurricularactivities'].length>0){
         extraCurricularActivities(raw['extracurricularactivities']);
     }
-    if(raw['hobbiesandinterests']){
+    if(raw['hobbiesandinterests'].length>0){
         hobbies(raw['hobbiesandinterests']);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{document}\n"); // document ends
