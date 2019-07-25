@@ -1,13 +1,41 @@
-const express = require('express'); 
+const express = require('express');
 const app = express();
 const ServerPortRouter = express.Router();
 app.use('/serverport', ServerPortRouter);
 'use strict';
 
 const latex = require('node-latex');
-const fs = require('fs'); 
+const fs = require('fs');
 const path = require('path');
 
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+   destination: "./server/routes/",
+   filename: function(req, file, cb){
+      cb(null,"passportphoto.jpg");;
+   }
+});
+
+const upload = multer({
+   storage: storage
+}).single('photo');
+
+ServerPortRouter.route("/upload").post( (req,res) => {
+    upload(req,res, (err) => {
+      if(err){
+        return res.status(440);
+      }
+      if(req.file === undefined){
+        return res.status(404).json({msg:"Image Not Found"});
+      }
+      else {
+        res.status(200).json({
+          msg: "File Uploaded"
+        });
+      }
+    });
+});
 
 ServerPortRouter.route('/').post(function (req, res) {
     console.log(req.body);
@@ -18,7 +46,7 @@ ServerPortRouter.route('/').post(function (req, res) {
     console.log(logopath);
     console.log("*********************************************************************");
     make(raw);
-    
+
     //Input latex file
     const input = fs.createReadStream(path.join( __dirname , 'latex.tex'));
     //Name of output File
@@ -114,7 +142,7 @@ function make(raw) {
         hobbies(raw['hobbiesandinterests']);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{document}\n"); // document ends
-    console.log('JAI HIND');    
+    console.log('JAI HIND');
 }
 
 function basic(basic) {

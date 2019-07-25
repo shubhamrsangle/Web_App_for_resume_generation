@@ -1,15 +1,18 @@
 import React , {Component,Fragment} from 'react';
+import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class basic extends Component {
+
 	type = 3;
 	state = {
 			modal: false,
 			name: "",
 			email: "",
 			degree: "B.Tech",
+			photo: null,
 			linkedinid: "",
-			photo: null
+			img: ""
 	}
 
 	eventHandler = (e) => {this.setState({[e.target.name]: e.target.value})}
@@ -21,13 +24,32 @@ export default class basic extends Component {
   submit = (event) => {
     event.preventDefault();
 		this.toggle();
+
     const body = {
 			name: this.state.name,
 			email: this.state.email,
 			degree: this.state.degree,
-			linkedinid: this.state.linkedinid,
-			photo: this.state.photo
+			linkedinid: this.state.linkedinid
 		};
+
+		if (this.state.photo !== null) {
+			const formData = new FormData();
+	        formData.append('photo',this.state.photo);
+	        const config = {
+	            headers: {
+	                'content-type': 'multipart/form-data'
+	            }
+	        };
+	        axios.post("http://localhost:4000/serverport/upload",formData,config)
+	            .then((response) => {
+									console.log(response);
+	                alert("The file is successfully uploaded");
+	            }).catch((error) => {
+								alert(error);
+	        });
+		}
+
+
     this.props.submit(this.type, body);
   }
 
@@ -57,8 +79,7 @@ export default class basic extends Component {
 										<strong>LinkedIn Id</strong> : {this.props.fields.linkedinid}
 									</li>
 								</ul>
-
-
+								<img src={this.state.img} alt="No Profile Pic" />
 								</div>
 							</div>
 						</div>
@@ -72,7 +93,7 @@ export default class basic extends Component {
 					<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 						<ModalHeader toggle={this.toggle}>Edit the Academic Project</ModalHeader>
 						<ModalBody>
-						<form onSubmit={this.submit} id="basicForm" name="basicForm">
+						<form onSubmit={this.submit} id="basicForm" encType="multipart/form-data" name="basicForm">
 						 <input type="text" className="form-control" name={"name"} placeholder="Name" value={this.state.name}
 							onChange={this.eventHandler}/>
 						 <input type="email" className="form-control" name={"email"} placeholder="Email Id" value={this.state.email}
@@ -83,6 +104,8 @@ export default class basic extends Component {
 		 				</div>
 						 <input type="text" className="form-control" name={"linkedinid"} placeholder="LinkedIn Id" value={this.state.linkedinid}
 							onChange = {this.eventHandler}/>
+						<input type="file" className="form-control" name={"photo"} id="photo"
+							onChange = {(e) => {this.setState({photo:e.target.files[0]})}} />
 						</form>
 						</ModalBody>
 						<ModalFooter>
