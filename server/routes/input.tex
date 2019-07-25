@@ -1,0 +1,202 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{anysize}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=0.75in, right=0.75in, top=0.5in, bottom=0.75in, includefoot, headheight=13.6pt]{geometry}
+\usepackage{color,graphicx}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{latexsym}
+\usepackage{mdwlist}
+\usepackage{tabularx}
+\renewcommand{\labelitemii}{$\circ$}
+
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat's bookmarks
+    pdftoolbar=true,        % show Acrobat's toolbar?
+    pdfmenubar=true,        % show Acrobat's menu?
+    pdffitwindow=true,      % page fit to window when opened
+    pdftitle={CV - XYZ},    % title
+    pdfauthor={Newton},     % author
+    pdfsubject={Placements IITTP},   % subject of the document
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=magenta,        % color of internal links
+    citecolor=blue,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+% Margines
+
+\addtolength{\oddsidemargin}{-0.215in}
+\addtolength{\textwidth}{0.2in}
+
+\definecolor{titleColor}{rgb}{0.85, 0.85, 0.85}
+
+\begin{document}
+
+%%%%%%%%% vertical space %%%%%%%%%%%%%%%%%
+
+
+\begin{table}[h!]
+     \begin{center}
+     \begin{tabular}{  l  p{10cm}  p{8cm}}
+	 \raisebox{-\totalheight}{\includegraphics[scale=.2]{C:/Users/deepm/Desktop/WebDevProjects/Web_App_for_resume_generation/server/routes/logoupdated.png}}
+	 &
+	 \begin{itemize}
+	 \setlength\itemsep{.01em}
+  		\item[] \textbf{XYZ}
+		\item[] \textbf{Master of Technology in Computer Science and Engineering}
+		\item[] \textbf{Indian Institute of Technology Tirupati, India}
+		\item[] \textbf{cs18m@iittp.ac.in}
+		\item[] \textbf{www.linkedin.com/in/linkedin-id}
+	\end{itemize}
+ 	 
+ 	 \end{tabular}
+	 \end{center}
+     \end{table}
+
+\vspace{-.8cm}
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Education Details}}}
+\\ \\
+%\begin{table}[ht!]
+%\begin{center}
+\indent \begin{tabular}{ l @{\hskip 0.65in} l @{\hskip 0.90in} l @{\hskip 1.00in} l @{\hskip 0.27in} l }
+\hline
+\textbf{Program} & \textbf{Institute} & \textbf{Year} & \textbf{\%/CGPA} \\
+\hline
+Electronic Systems &  IIT Tirupati & 2020 & 9.3/10 \\
+Electronics \& Communication &  NIT Kurukshetra & 2018 & 8.24/10\\
+- & CBSE & 2014 & 82.2/100 \\
+- &  CBSE & 2012 & 88.2/100 \\
+
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Areas of Interest}}}
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \item {{Computer Architecture, Multi-core Architecture, Embedded Systems, Signal Processing}}
+ \end{itemize} 
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Technical Proficiency}}}\\
+
+\begin{tabular}{p{1.6in}p{0.1in}p{4.5in}}
+  \textbf{\small{Operating Systems}} &: &{{Windows, Linux}} \\
+  
+  \textbf{\small{Programming Languages}} &: &{{C, Python, C++, VHDL, Verilog}} \\
+  \textbf{\small{Hardware Platforms}} &: &{{8051, 8086, ATMEL AVR, Altera EPM3064, MaxV 5M1270 CPLDs}} \\
+  \textbf{\small{Softwares/Tools}} &: &{{Sniper, MATLAB, TortoiseHg, Visual Studio, \LaTeX}} \\
+\end{tabular}
+
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Academic Projects}}}
+\begin{itemize*}
+  \setlength{\itemsep}{1pt}
+  \item \textbf{M.Tech Thesis - SXYZ}  \\
+{(Guide : abcd, IIT Tirupati)} \hfill {\small{{\textbf{[Jul '19 - till date]}}\/}}
+\begin{itemize*}
+  \setlength{\itemsep}{.00pt}
+      \item \textbf{Abstract}: three to four lines
+\end{itemize*}
+\end{itemize*}
+
+\begin{itemize*}
+  \setlength{\itemsep}{1pt}
+  \item \textbf{B.Tech Project - ABCD} \\
+{(Guide : XYZ, IIT Tirupati)}  \hfill {\small{{\textbf{[Jan '17 - Jun '18]}}\/}}
+\begin{itemize*}
+
+  \setlength{\itemsep}{.00pt}
+      \item \textbf{Abstract}: three to four lines
+\end{itemize*}
+\end{itemize*}
+
+%\colorbox{titleColor}{\parbox{6.7in}{\textbf{Technical Projects}}}
+
+\begin{itemize*}
+  \setlength{\itemsep}{1pt}
+  \item \textbf{\small{Project 1}} \hfill {\small{{\textbf{[Mar '13 - Apr '13]}}}\/} 
+\begin{itemize*}
+	\item a line or two about project.
+\end{itemize*}
+\end{itemize*}
+
+\begin{itemize*}
+  \setlength{\itemsep}{1pt}
+  \item \textbf{\small{Project 2}} \hfill {\small{{\textbf{[Mar '13 - Apr '13]}}}\/} 
+\begin{itemize*}
+	\item a line or two about project.
+\end{itemize*}
+\end{itemize*}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Experience}}}
+\begin{itemize*}
+  \setlength{\itemsep}{.00pt}
+  \item \textbf{{Teacher Assistant, Computer Science Lab, IIT Tirupati}} \hfill {\small{{\textbf{[AUg '18 - Jul '19]}}\/}} \\
+{(Guide : XYZ, IIT Tirupati)}
+      \begin{itemize*}
+       \item Working as a Teaching Assistant for conducting undergraduate lab courses.
+      \end{itemize*}
+     \end{itemize*}
+\begin{itemize*}
+  \setlength{\itemsep}{.00pt}
+  \item \textbf{{Intern, company name, area}} \hfill {\small{{\textbf{[May '19 - Jul '19]}}\/}} \\
+{(Guide : XYZ, company name)}
+      \begin{itemize*}
+       \item A line or two about the project you worked on.
+      \end{itemize*}
+     \end{itemize*}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Relevant Courses}}}\\[0.08in]
+\begin{tabular}{p{3.5in}p{3in}p{2.5in}}
+\hspace{0.9pc}$\bullet$ Machine Learning &$\bullet$ Artificial Intelligence\\[0.05in]
+\hspace{0.9pc}$\bullet$ Advanced Computer Archiecture&$\bullet$ Distributed Systems\\[0.05in]
+\hspace{0.9pc}$\bullet$ Advanced Data Structures&$\bullet$ Machine Learning Lab \\[0.05in]
+\end{tabular}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Achievements}}}\\[0.08in]
+\begin{itemize}
+
+\setlength{\itemsep}{1pt}
+\item Recipient of \textbf{Teaching Assistant Scholarship} at Indian Institute of Technology Tirupati by Ministry of Human
+Resource Development, Government of India
+\item \textbf{Achievement 2} a line or two about achievement.
+\end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Positions of Responsibility}}}\\
+
+\textbf{Position, Club/ Event/ Institute}  \hfill {\small{{\textbf{[May '13 - April '14]}}}\/}                        
+\begin{itemize*}
+\item key role of your position .
+\item a line or two about your work in that position.
+\end{itemize*}
+
+\textbf{Position, Club/ Event/ Institute}  \hfill {\small{{\textbf{[May '13 - April '14]}}}\/}                        
+\begin{itemize*}
+\item key role of your position.
+\item a line or two about your work in that position.
+\end{itemize*}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Extra Curricular activities}}}
+
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \item Activity1 \hfill {\small{{[Mar '19]}}\/} 
+  \item Activity2 \hfill {\small{{[Mar '19]}}\/} 
+\end{itemize}
+
+\colorbox{titleColor}{\parbox{6.7in}{\textbf{Hobbies and Interests}}}
+%\vspace{0.5 pt}
+
+\begin{itemize}
+  \setlength{\itemsep}{1pt}
+  \item Watching Documentaries, Reading Fiction and Non-Fiction books, Trekking, Solving Rubik Cube
+\end{itemize}
+
+\textit{Updated on 22nd Jun 2020}
+\end{document}
