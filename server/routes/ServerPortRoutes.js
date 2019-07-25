@@ -1,4 +1,4 @@
-const express = require('express');	
+const express = require('express'); 
 const app = express();
 const ServerPortRouter = express.Router();
 app.use('/serverport', ServerPortRouter);
@@ -22,20 +22,20 @@ ServerPortRouter.route('/').post(function (req, res) {
     //Input latex file
     const input = fs.createReadStream(path.join( __dirname , 'latex.tex'));
     //Name of output File
-	const output = fs.createWriteStream(path.join( __dirname , 'output.pdf'));
-	//Object for pdf generation
-	const pdf = latex(input);
+    const output = fs.createWriteStream(path.join( __dirname , 'output.pdf'));
+    //Object for pdf generation
+    const pdf = latex(input);
 
-	//Piping out object
-	pdf.pipe(output);
-	pdf.on('error', err => {
-		console.error(err);
-		res.send(false);
-	});
-	pdf.on('finish', () => {
-		console.log('PDF generated!');
-		res.send(true);
-	});
+    //Piping out object
+    pdf.pipe(output);
+    pdf.on('error', err => {
+        console.error(err);
+        res.send(false);
+    });
+    pdf.on('finish', () => {
+        console.log('PDF generated!');
+        res.send(true);
+    });
 });
 
 ServerPortRouter.route('/').get(function (req, res) {
@@ -78,40 +78,40 @@ function make(raw) {
     fs.appendFileSync('./server/routes/latex.tex', mar);
     fs.appendFileSync('./server/routes/latex.tex', "\\begin{document}\n\n"); // document begins
     if(raw['basic']!=null){
-    	 basic(raw['basic']);
+         basic(raw['basic']);
     }
-   	if(raw['educationdetails']){
-    	educationDetails(raw['educationdetails']);
+    if(raw['educationdetails']){
+        educationDetails(raw['educationdetails']);
     }
     if(raw['areasofinterest']){
-    	areaOfInterest(raw['areasofinterest']);
+        areaOfInterest(raw['areasofinterest']);
     }
     if(raw['technicalproficiency']){
-    	technicalProficiency(raw['technicalproficiency']);
+        technicalProficiency(raw['technicalproficiency']);
     }
     if (raw['publications']) {
         publications(raw['publications']);  // uncomment when publications component is fixed
     }
     if(raw['academicprojects']){
-    	academicProject(raw['academicprojects']);
+        academicProject(raw['academicprojects']);
     }
     if(raw['experience']){
-    	experience(raw['experience']);
+        experience(raw['experience']);
     }
     if(raw['courses']){
-    	relevantCourses(raw['courses']);
+        relevantCourses(raw['courses']);
     }
     if(raw['achievements']){
-    	achievements(raw['achievements']);
+        achievements(raw['achievements']);
     }
     if(raw['positionsofresponsibility']){
-    	positonsOfResponsibility(raw['positionsofresponsibility']);
+        positonsOfResponsibility(raw['positionsofresponsibility']);
     }
     if(raw['extracurricularactivities']){
-    	extraCurricularActivities(raw['extracurricularactivities']);
+        extraCurricularActivities(raw['extracurricularactivities']);
     }
     if(raw['hobbiesandinterests']){
-    	hobbies(raw['hobbiesandinterests']);
+        hobbies(raw['hobbiesandinterests']);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{document}\n"); // document ends
     console.log('JAI HIND');    
@@ -191,12 +191,14 @@ function publications(publications) {
     for (let i = 0; i < publications.length; i++) {
         let title = publications[i]['pubtitle'];
         let author = publications[i]['pubauthors'];
+    let place = publications[i]['pubplace'];
         let details = publications[i]['pubdescription'];
         let doi = publications[i]['pubdoi'];
         fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{1pt}\n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\item ${title}\n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\newline Authors: ${author}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline Journal Details: ${details}\n`);
+    fs.appendFileSync('./server/routes/latex.tex', `\\newline Place of Publication: ${place}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline Description: ${details}\n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\newline DOI: ${doi}\n\n`);
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
@@ -309,7 +311,7 @@ function extraCurricularActivities(extraCurricularActivities) {
     \\setlength{\\itemsep}{1pt}\n`);
     for (let i = 0; i < extraCurricularActivities.length; i++) {
         let activity = extraCurricularActivities[i]['activity'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${activity} \\hfill {\\small{{[Mar '19]}}\\/}\n`); // error
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${activity} \\hfill \n`); // error
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
 }
