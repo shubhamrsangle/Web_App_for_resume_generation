@@ -8,7 +8,8 @@ export default class basic extends Component {
 			name: "",
 			email: "",
 			degree: "B.Tech",
-			linkedinid: ""
+			linkedinid: "",
+			photo: null
 	}
 
 	eventHandler = (e) => {this.setState({[e.target.name]: e.target.value})}
@@ -24,7 +25,8 @@ export default class basic extends Component {
 			name: this.state.name,
 			email: this.state.email,
 			degree: this.state.degree,
-			linkedinid: this.state.linkedinid
+			linkedinid: this.state.linkedinid,
+			photo: this.state.photo
 		};
     this.props.submit(this.type, body);
   }
@@ -73,7 +75,7 @@ export default class basic extends Component {
 						<form onSubmit={this.submit} id="basicForm" name="basicForm">
 						 <input type="text" className="form-control" name={"name"} placeholder="Name" value={this.state.name}
 							onChange={this.eventHandler}/>
-						 <input type="text" className="form-control" name={"email"} placeholder="Email Id" value={this.state.email}
+						 <input type="email" className="form-control" name={"email"} placeholder="Email Id" value={this.state.email}
 							onChange = {this.eventHandler}/>
 						<div onChange = { (e) => {this.setState({degree: e.target.value});} }>
 		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked value="B.Tech"/>B.Tech</label>

@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicDetails from '../Basic/basic';
-import EducationDetails from '../EducationDetails/educationDetails';
+import EducationDetails from '../EducationDetails/educationdetails';
 import AreasOfInterest from '../AreasOfInterest/areasofinterest';
 import TechnicalProficiency from '../TechnicalProficiency/technicalproficiency';
 import Publications from '../Publications/publications';
