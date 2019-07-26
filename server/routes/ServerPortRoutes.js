@@ -10,10 +10,19 @@ const path = require('path');
 
 const multer = require("multer");
 
+var currentFile = "";
+
 const storage = multer.diskStorage({
    destination: "./server/routes/",
    filename: function(req, file, cb){
-      cb(null,"passportphoto.jpg");;
+     if(currentFile !== ""){
+       fs.unlink('./server/routes/' + currentFile, function(err) {
+         if(err)
+          console.log(err);
+       });
+     }
+      currentFile = "passportphoto" + path.extname(file.originalname);
+      cb(null,"passportphoto" + path.extname(file.originalname));
    }
 });
 
@@ -21,7 +30,22 @@ const upload = multer({
    storage: storage
 }).single('photo');
 
+ServerPortRouter.route("/removePhoto").post((req,res) => {
+  if(currentFile!==""){
+    fs.unlink('./server/routes/' + currentFile, function(err) {
+      if (err)
+        return res.status(404);
+
+   });
+   currentFile = "";
+   return res.status(200).json({msg:"done"});
+ }
+ return res.status(400).json({msg:"suma"});
+});
+
 ServerPortRouter.route("/upload").post( (req,res) => {
+
+    console.log(currentFile);
     upload(req,res, (err) => {
       if(err){
         return res.status(440);
@@ -40,6 +64,14 @@ ServerPortRouter.route("/upload").post( (req,res) => {
 ServerPortRouter.route('/').post(function (req, res) {
     console.log(req.body);
     let raw = req.body;
+    if(raw.basic.photo === null && currentFile !== ""){
+      console.log("Entering " + currentFile);
+      fs.unlink('./server/routes/' + currentFile, function(err) {
+        if(err)
+          return res.status(404);
+     });
+     currentFile = "";
+    }
     console.log("*********************************************************************");
     logopath=path.join(__dirname,'logoupdated.png');
     logopath=logopath.split('\\').join('/');

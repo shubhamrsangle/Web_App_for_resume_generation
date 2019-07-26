@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use('/serverport', ServerPortRouter);
 
+app.use(express.static('./server/routes'));
+
 if (process.env.NODE_ENV === 'production') {
   // Set static folder
   app.use(express.static('../client/build'));
