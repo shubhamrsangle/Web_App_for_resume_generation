@@ -65,7 +65,6 @@ ServerPortRouter.route('/').post(function (req, res) {
     console.log(req.body);
     let raw = req.body;
     if(raw.basic.photo === null && currentFile !== ""){
-      console.log("Entering " + currentFile);
       fs.unlink('./server/routes/' + currentFile, function(err) {
         if(err)
           return res.status(404);

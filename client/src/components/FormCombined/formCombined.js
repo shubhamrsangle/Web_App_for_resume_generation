@@ -252,7 +252,7 @@ export default class Form extends React.Component {
         <HobbiesAndInterests fields={this.state.hobbiesandinterests} submit={this.submitHandler} removeFunc={this.removeFunction} editFunc={this.editFunction}/>
 
 
-        <button onClick={this.finalSubmit}>Submit</button>
+        <button style={{margin:"10px"}} className="btn btn-success btn-lg" onClick={this.finalSubmit}>Submit</button>
       </React.Fragment>
     );
   }
