@@ -13,6 +13,7 @@ import ExtraCurricularActivities from '../ExtraCurricularActivities/extracurricu
 import HobbiesAndInterests from '../HobbiesAndInterests/hobbiesandinterests';
 import {Card, CardHeader, UncontrolledCollapse, CardBody} from 'reactstrap';
 import axios from 'axios';
+import localStorage from 'local-storage';
 
 export default class Form extends React.Component {
 

@@ -25,14 +25,6 @@ export default class basic extends Component {
     event.preventDefault();
 		this.toggle();
 
-    const body = {
-			name: this.state.name,
-			email: this.state.email,
-			degree: this.state.degree,
-			linkedinid: this.state.linkedinid,
-			photo: this.state.img
-		};
-
 		if (this.state.img !== null) {
 			const formData = new FormData();
 	        formData.append('photo',this.state.img);
@@ -41,8 +33,10 @@ export default class basic extends Component {
 	                'content-type': 'multipart/form-data'
 	            }
 	        };
-	        axios.post("http://localhost:4000/serverport/upload",formData,config)
+	        await axios.post("http://localhost:4000/serverport/upload",formData,config)
 	            .then((response) => {
+								alert('done');
+								console.log(this.state.img);
 								this.setState({
 									photo:this.state.img
 								});
@@ -52,7 +46,14 @@ export default class basic extends Component {
 	        });
 		}
 
-
+		const body = {
+			name: this.state.name,
+			email: this.state.email,
+			degree: this.state.degree,
+			linkedinid: this.state.linkedinid,
+			photo: this.state.photo
+		};
+		console.log(body);
     this.props.submit(this.type, body);
   }
 
@@ -102,6 +103,15 @@ export default class basic extends Component {
 													this.setState({
 														photo:null
 													});
+													const body = {
+														name: this.state.name,
+														email: this.state.email,
+														degree: this.state.degree,
+														linkedinid: this.state.linkedinid,
+														photo: this.state.photo !== null ? this.state.photo.name : null
+													};
+													console.log(body);
+											    this.props.submit(this.type, body);
 												}).catch((error) => {
 													alert("Photo could not be removed... Try again" + error);
 										});
@@ -138,7 +148,7 @@ export default class basic extends Component {
 							onChange = {this.eventHandler}/>
 						<input type="file" className="form-control" name={"img"} id="img" accept="image/jpg"
 							onChange = {(e) => {
-								console.log(e.target.files[0]);
+								//console.log(e.target.files[0]);
 								if(e.target.files[0])
 								this.setState({img:e.target.files[0]});
 							}} />
