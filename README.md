@@ -2,8 +2,8 @@
 
 Take input from form and generate resume according to IIT Tirupati template
 
-##Dependencies
+## Dependencies
 
-  *Node Modules listed
+  * Node Modules listed
   
-  *Latex should be installed on server(pdflatex package should be available)
+  * Latex should be installed on server(pdflatex package should be available)
