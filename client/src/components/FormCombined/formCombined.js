@@ -13,23 +13,85 @@ import ExtraCurricularActivities from '../ExtraCurricularActivities/extracurricu
 import HobbiesAndInterests from '../HobbiesAndInterests/hobbiesandinterests';
 import {Card, CardHeader, UncontrolledCollapse, CardBody} from 'reactstrap';
 import axios from 'axios';
-import localStorage from 'local-storage';
 
 export default class Form extends React.Component {
 
-  state = {
-    basic : {},
-		educationdetails : [],
-		areasofinterest : [],
-		technicalproficiency : [],
-		publications :[],
-		academicprojects : [],
-		experience : [],
-		courses : [],
-		achievements : [],
-		positionsofresponsibility: [],
-		extracurricularactivities : [],
-		hobbiesandinterests : []
+  constructor(){
+    super();
+    this.state = {
+      basic : {},
+      educationdetails : [],
+      areasofinterest : [],
+      technicalproficiency : [],
+      publications :[],
+      academicprojects : [],
+      experience : [],
+      courses : [],
+      achievements : [],
+      positionsofresponsibility: [],
+      extracurricularactivities : [],
+      hobbiesandinterests : []  
+      }
+    //----------------------------------------------------------//
+    const basicLocal = JSON.parse(localStorage.getItem('basic'));
+    if(basicLocal)
+      this.state.basic = basicLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const educationdetailsLocal = JSON.parse(localStorage.getItem('educationdetails'));
+    if(educationdetailsLocal)
+      this.state.educationdetails = educationdetailsLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const areasofinterestLocal = JSON.parse(localStorage.getItem('areasofinterest'));
+    if(areasofinterestLocal)
+      this.state.areasofinterest = areasofinterestLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const technicalproficiencyLocal = JSON.parse(localStorage.getItem('technicalproficiency'));
+    if(technicalproficiencyLocal)
+      this.state.technicalproficiency = technicalproficiencyLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const publicationsLocal = JSON.parse(localStorage.getItem('publications'));
+    if(publicationsLocal)
+      this.state.publications = publicationsLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const academicprojectsLocal = JSON.parse(localStorage.getItem('academicprojects'));
+    if(academicprojectsLocal)
+      this.state.academicprojects = academicprojectsLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const experienceLocal = JSON.parse(localStorage.getItem('experience'));
+    if(experienceLocal)
+      this.state.experience = experienceLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const coursesLocal = JSON.parse(localStorage.getItem('courses'));
+    if(coursesLocal)
+      this.state.courses = coursesLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const achievementsLocal = JSON.parse(localStorage.getItem('achievements'));
+    if(achievementsLocal)
+      this.state.achievements = achievementsLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const positionsofresponsibilityLocal = JSON.parse(localStorage.getItem('positionsofresponsibility'));
+    if(positionsofresponsibilityLocal)
+      this.state.positionsofresponsibility = positionsofresponsibilityLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const extracurricularactivitiesLocal = JSON.parse(localStorage.getItem('extracurricularactivities'));
+    if(extracurricularactivitiesLocal)
+      this.state.extracurricularactivities = extracurricularactivitiesLocal;
+    //----------------------------------------------------------//
+    //----------------------------------------------------------//
+    const hobbiesandinterestsLocal = JSON.parse(localStorage.getItem('hobbiesandinterests'));
+    if(hobbiesandinterestsLocal)
+      this.state.hobbiesandinterests = hobbiesandinterestsLocal;
+    //----------------------------------------------------------//
   }
 
   removeFunction = (type, index) => {
@@ -38,57 +100,79 @@ export default class Form extends React.Component {
       case 0:
           array = [...this.state.academicprojects];
           array.splice(index,1);
-          this.setState({academicprojects:array});
+          this.setState({academicprojects:array}, () =>{
+            localStorage.setItem('academicprojects',JSON.stringify(this.state.academicprojects));
+          });
           break;
       case 1:
           array = [...this.state.achievements];
           array.splice(index,1);
-          this.setState({achievements:array});
+          this.setState({achievements:array}, () => {
+            localStorage.setItem('achievements',JSON.stringify(this.state.achievements));
+          });
           break;
       case 2:
           array = [...this.state.areasofinterest];
           array.splice(index,1);
-          this.setState({areasofinterest:array});
+          this.setState({areasofinterest:array}, () => {
+            localStorage.setItem('areasofinterest',JSON.stringify(this.state.areasofinterest));
+        });
           break;
       case 4:
           array = [...this.state.courses];
           array.splice(index,1);
-          this.setState({courses:array});
+          this.setState({courses:array},() => {
+            localStorage.setItem('courses',JSON.stringify(this.state.courses)); 
+          });
           break;
       case 5:
           array = [...this.state.educationdetails];
           array.splice(index,1);
-          this.setState({educationdetails:array});
+          this.setState({educationdetails:array}, () => {
+            localStorage.setItem('educationdetails',JSON.stringify(this.state.educationdetails));
+          });
           break;
       case 6:
           array = [...this.state.experience];
           array.splice(index,1);
-          this.setState({experience:array});
+          this.setState({experience:array}, () => {
+            localStorage.setItem('experience',JSON.stringify(this.state.experience));
+          });
           break;
       case 7:
           array = [...this.state.extracurricularactivities];
           array.splice(index,1);
-          this.setState({extracurricularactivities:array});
+          this.setState({extracurricularactivities:array},() => {
+            localStorage.setItem('extracurricularactivities',JSON.stringify(this.state.extracurricularactivities));
+          });
           break;
       case 8:
           array = [...this.state.hobbiesandinterests];
           array.splice(index,1);
-          this.setState({hobbiesandinterests:array});
+          this.setState({hobbiesandinterests:array},() => {
+            localStorage.setItem('hobbiesandinterests',JSON.stringify(this.state.hobbiesandinterests));
+          });
           break;
       case 9:
           array = [...this.state.positionsofresponsibility];
           array.splice(index,1);
-          this.setState({positionsofresponsibility:array});
+          this.setState({positionsofresponsibility:array},() => {
+            localStorage.setItem('positionsofresponsibility',JSON.stringify(this.state.positionsofresponsibility));
+          });
           break;
       case 10:
           array = [...this.state.publications];
           array.splice(index,1);
-          this.setState({publications:array});
+          this.setState({publications:array},() => {
+            localStorage.setItem('publications',JSON.stringify(this.state.publications));
+          });
           break;
       case 11:
           array = [...this.state.technicalproficiency];
           array.splice(index,1);
-          this.setState({technicalproficiency:array});
+          this.setState({technicalproficiency:array},() => {
+            localStorage.setItem('technicalproficiency',JSON.stringify(this.state.technicalproficiency));
+          });
           break;
       default: console.log("Not Defined");
     }
@@ -101,67 +185,89 @@ export default class Form extends React.Component {
           array = [...this.state.academicprojects];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({academicprojects:array});
+          this.setState({academicprojects:array},() => {
+            localStorage.setItem('academicprojects',JSON.stringify(this.state.academicprojects));
+          });
           break;
       case 1:
           array = [...this.state.achievements];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({achievements:array});
+          this.setState({achievements:array},() => {
+            localStorage.setItem('achievements',JSON.stringify(this.state.achievements));
+          }); 
           break;
       case 2:
           array = [...this.state.areasofinterest];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({areasofinterest:array});
+          this.setState({areasofinterest:array},() => {
+            localStorage.setItem('areasofinterest',JSON.stringify(this.state.areasofinterest));
+          });
           break;
       case 4:
           array = [...this.state.courses];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({courses:array});
+          this.setState({courses:array},() => {
+            localStorage.setItem('courses',JSON.stringify(this.state.courses));
+          });
           break;
       case 5:
           array = [...this.state.educationdetails];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({educationdetails:array});
+          this.setState({educationdetails:array},() => {
+            localStorage.setItem('educationdetails',JSON.stringify(this.state.educationdetails));
+          });
           break;
       case 6:
           array = [...this.state.experience];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({experience:array});
+          this.setState({experience:array},() => {
+            localStorage.setItem('experience',JSON.stringify(this.state.experience));
+          });
           break;
       case 7:
           array = [...this.state.extracurricularactivities];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({extracurricularactivities:array});
+          this.setState({extracurricularactivities:array},() => {
+            localStorage.setItem('extracurricularactivities',JSON.stringify(this.state.extracurricularactivities));
+          });
           break;
       case 8:
           array = [...this.state.hobbiesandinterests];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({hobbiesandinterests:array});
+          this.setState({hobbiesandinterests:array},() => {
+            localStorage.setItem('hobbiesandinterests',JSON.stringify(this.state.hobbiesandinterests));
+          });
           break;
       case 9:
           array = [...this.state.positionsofresponsibility];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({positionsofresponsibility:array});
+          this.setState({positionsofresponsibility:array},() => {
+            localStorage.setItem('positionsofresponsibility',JSON.stringify(this.state.positionsofresponsibility));
+          });
           break;
       case 10:
           array = [...this.state.publications];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({publications:array});
+          this.setState({publications:array},() => {
+            localStorage.setItem('publications',JSON.stringify(this.state.publications));
+          });
           break;
       case 11:
           array = [...this.state.technicalproficiency];
           array.splice(index,1);
           array.splice(index,0,data);
-          this.setState({technicalproficiency:array});
+          this.setState({technicalproficiency:array},() => {
+            localStorage.setItem('technicalproficiency',JSON.stringify(this.state.technicalproficiency));
+          });
           break;
       default: console.log("Not Defined");
     }
@@ -170,40 +276,63 @@ export default class Form extends React.Component {
   submitHandler = (type, data) => {
     switch(type) {
       case 0:
-          this.setState({academicprojects: [...this.state.academicprojects, data]});
+          this.setState({academicprojects: [...this.state.academicprojects, data]},() => {
+            localStorage.setItem('academicprojects',JSON.stringify(this.state.academicprojects));
+          });
           break;
       case 1:
-          this.setState({achievements: [...this.state.achievements, data]});
+          this.setState({achievements: [...this.state.achievements, data]},() => {
+            localStorage.setItem('achievements',JSON.stringify(this.state.achievements));
+          });
           break;
       case 2:
-          this.setState({areasofinterest: [...this.state.areasofinterest, data]});
+          this.setState({areasofinterest: [...this.state.areasofinterest, data]},() => {
+            localStorage.setItem('areasofinterest',JSON.stringify(this.state.areasofinterest));
+          });
           break;
       case 3:
           this.setState({basic: data});
+          localStorage.setItem('basic',JSON.stringify(data));
           break;
       case 4:
-          this.setState({courses: [...this.state.courses, data]});
+          this.setState({courses: [...this.state.courses, data]},() => {
+            localStorage.setItem('courses',JSON.stringify(this.state.courses));
+          });
           break;
       case 5:
-          this.setState({educationdetails: [...this.state.educationdetails, data]});
+          this.setState({educationdetails: [...this.state.educationdetails, data]},() => {
+            localStorage.setItem('educationdetails',JSON.stringify(this.state.educationdetails));
+          });
           break;
       case 6:
-          this.setState({experience: [...this.state.experience, data]});
+          this.setState({experience: [...this.state.experience, data]},() => {
+            localStorage.setItem('experience',JSON.stringify(this.state.experience));
+          });
           break;
       case 7:
-          this.setState({extracurricularactivities: [...this.state.extracurricularactivities, data]});
+          this.setState({extracurricularactivities: [...this.state.extracurricularactivities, data]},() => {
+            localStorage.setItem('extracurricularactivities',JSON.stringify(this.state.extracurricularactivities));
+          });
           break;
       case 8:
-          this.setState({hobbiesandinterests: [...this.state.hobbiesandinterests, data]});
+          this.setState({hobbiesandinterests: [...this.state.hobbiesandinterests, data]},() => {
+            localStorage.setItem('hobbiesandinterests',JSON.stringify(this.state.hobbiesandinterests));
+          });
           break;
       case 9:
-          this.setState({positionsofresponsibility: [...this.state.positionsofresponsibility, data]});
+          this.setState({positionsofresponsibility: [...this.state.positionsofresponsibility, data]},() => {
+            localStorage.setItem('positionsofresponsibility',JSON.stringify(this.state.positionsofresponsibility));
+          });
           break;
       case 10:
-          this.setState({publications: [...this.state.publications, data]});
+          this.setState({publications: [...this.state.publications, data]},() => {
+            localStorage.setItem('publications',JSON.stringify(this.state.publications));
+          });
           break;
       case 11:
-          this.setState({technicalproficiency: [...this.state.technicalproficiency, data]});
+          this.setState({technicalproficiency: [...this.state.technicalproficiency, data]},() => {
+            localStorage.setItem('technicalproficiency',JSON.stringify(this.state.technicalproficiency));
+          });
           break;
       default: console.log("Not Defined");
     }

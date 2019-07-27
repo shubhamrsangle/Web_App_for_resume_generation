@@ -86,7 +86,7 @@ class EducationDetails extends React.Component {
           <div className="row">
                 {
                   this.props.fields.length === 0 ? <p>Nothing is Added</p> :
-                  this.props.fields.map((nan,index,summa)=>{
+                  this.props.fields.map((nan,index,summa) =>{
                     return(
                       <div className="col-12 col-md-6 col-lg-4" key={"education"+index}>
                       <div className="card col-auto">
@@ -112,7 +112,7 @@ class EducationDetails extends React.Component {
 
                           <button className="btn-info col-6" onClick={() => this.editToggle(nan,index)}>Edit</button>
 
-                          <Modal isOpen={this.state.editModal} toggle={()=>this.editToggle({},-1)} className={this.props.className}>
+                          <Modal isOpen={this.state.editModal} toggle={() =>this.editToggle({},-1)} className={this.props.className}>
                             <ModalHeader toggle={this.editToggle}>Edit the Education Detail</ModalHeader>
                             <ModalBody>
                             <form onSubmit={(e) => {this.editFunc(e);}} id="editEducation" name="editEducation">
@@ -163,9 +163,6 @@ class EducationDetails extends React.Component {
             </div>
           </CardBody></UncontrolledCollapse>
       </Card>
-
-
-
     );
   }
 }

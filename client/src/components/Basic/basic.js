@@ -5,7 +5,10 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 export default class basic extends Component {
 
 	type = 3;
-	state = {
+	
+	constructor(props){
+		super(props);
+		this.state = {
 			modal: false,
 			name: "",
 			email: "",
@@ -13,6 +16,16 @@ export default class basic extends Component {
 			photo: null,
 			linkedinid: "",
 			img: null
+		}
+		const { name,email,degree,linkedinid } = JSON.parse(localStorage.getItem('basic'));
+		if(name)
+			this.state.name = name;
+		if(email)
+			this.state.email = email;
+		if(degree)
+			this.state.degree = degree;
+		if(linkedinid)
+			this.state.linkedinid = linkedinid;
 	}
 
 	eventHandler = (e) => {this.setState({[e.target.name]: e.target.value})}
@@ -96,7 +109,7 @@ export default class basic extends Component {
 								{
 									this.state.photo === null ? <React.Fragment></React.Fragment> :
 									 	<React.Fragment>
-											<button className="btn-danger" onClick={()=>{
+											<button className="btn-danger" onClick={() => { 
 												axios.post('http://localhost:4000/serverport/removePhoto')
 												.then((response) => {
 													alert('removed');
@@ -141,8 +154,8 @@ export default class basic extends Component {
 						 <input type="email" className="form-control" name={"email"} placeholder="Email Id" value={this.state.email}
 							onChange = {this.eventHandler}/>
 						<div onChange = { (e) => {this.setState({degree: e.target.value});} }>
-		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked value="B.Tech"/>B.Tech</label>
-		 					<label className="radio-inline"><input type="radio" name="degree" value="M.Tech"/>M.Tech</label>
+		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="B.Tech"} value="B.Tech"/>B.Tech</label>
+		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="M.Tech"} value="M.Tech"/>M.Tech</label>
 		 				</div>
 						 <input type="text" className="form-control" name={"linkedinid"} placeholder="LinkedIn Id" value={this.state.linkedinid}
 							onChange = {this.eventHandler}/>
