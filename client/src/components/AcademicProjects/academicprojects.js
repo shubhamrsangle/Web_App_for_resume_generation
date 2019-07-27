@@ -64,7 +64,6 @@ class AcademicProjects extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       projectname: this.state.projectname,

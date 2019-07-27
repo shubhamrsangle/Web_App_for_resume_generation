@@ -59,7 +59,6 @@ class PositionsOfResponsibilities extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       position: this.state.position,

@@ -69,7 +69,6 @@ class Publications extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       pubtitle: this.state.pubtitle,

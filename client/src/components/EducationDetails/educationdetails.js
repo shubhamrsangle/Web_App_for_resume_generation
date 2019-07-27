@@ -64,7 +64,6 @@ class EducationDetails extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       programme: this.state.programme,

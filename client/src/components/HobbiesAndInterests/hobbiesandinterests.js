@@ -49,7 +49,6 @@ class HobbiesAndInterests extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       hobby: this.state.hobby

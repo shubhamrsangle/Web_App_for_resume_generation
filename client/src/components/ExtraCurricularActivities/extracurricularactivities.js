@@ -49,7 +49,6 @@ class ExtraCurricularActivities extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       activity: this.state.activity

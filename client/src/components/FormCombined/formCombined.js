@@ -342,8 +342,6 @@ export default class Form extends React.Component {
   //Final Submit Function
   finalSubmit = (e) => {
 		e.preventDefault();
-		console.log(this.state);
-		alert('Check console to see the submitted data using ctrl + shift + i ....');
 		axios.post('http://localhost:4000/serverport',this.state )
           .then(res => {
           	if(res.data)

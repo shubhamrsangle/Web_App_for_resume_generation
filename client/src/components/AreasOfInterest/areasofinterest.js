@@ -49,7 +49,6 @@ class AreasOfInterest extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       interest: this.state.interest

@@ -49,7 +49,6 @@ class Courses extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       course: this.state.course

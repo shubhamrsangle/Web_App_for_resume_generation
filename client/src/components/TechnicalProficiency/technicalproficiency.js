@@ -54,7 +54,6 @@ class TechnicalProficiencies extends React.Component {
   }
 
   editFunc = (event, index) => {
-    console.log(this.state.editIndex);
     event.preventDefault();
     const body = {
       title: this.state.title,

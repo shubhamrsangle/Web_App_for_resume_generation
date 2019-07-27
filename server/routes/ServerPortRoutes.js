@@ -45,7 +45,6 @@ ServerPortRouter.route("/removePhoto").post((req,res) => {
 
 ServerPortRouter.route("/upload").post( (req,res) => {
 
-    console.log(currentFile);
     upload(req,res, (err) => {
       if(err){
         return res.status(440);
@@ -62,7 +61,6 @@ ServerPortRouter.route("/upload").post( (req,res) => {
 });
 
 ServerPortRouter.route('/').post(function (req, res) {
-    console.log(req.body);
     let raw = req.body;
     if(raw.basic.photo === null && currentFile !== ""){
       fs.unlink('./server/routes/' + currentFile, function(err) {
@@ -71,12 +69,8 @@ ServerPortRouter.route('/').post(function (req, res) {
      });
      currentFile = "";
     }
-    console.log("Current File: " + currentFile);
-    console.log("*********************************************************************");
     logopath=path.join(__dirname,'logoupdated.png');
     logopath=logopath.split('\\').join('/');
-    console.log(logopath);
-    console.log("*********************************************************************");
     make(raw);
 
     //Input latex file
@@ -172,7 +166,6 @@ function make(raw) {
         hobbies(raw['hobbiesandinterests']);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{document}\n"); // document ends
-    console.log('JAI HIND');
 }
 
 function basic(basic) {
@@ -210,7 +203,6 @@ function educationDetails(educationDetails) {
                 tem += (i['programme'].charAt(k));
             }
         }
-        console.log(tem);
         fs.appendFileSync('./server/routes/latex.tex',`${tem} & ${i['institute']} & ${i['year']} & ${i['marks']}\\\\ \n`);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{tabular}\n\n");

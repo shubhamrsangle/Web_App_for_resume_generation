@@ -51,8 +51,6 @@ export default class basic extends Component {
 	        };
 	        await axios.post("http://localhost:4000/serverport/upload",formData,config)
 	            .then((response) => {
-								alert('done');
-								console.log(this.state.img);
 								this.setState({
 									photo:this.state.img
 								});
@@ -69,7 +67,6 @@ export default class basic extends Component {
 			linkedinid: this.state.linkedinid,
 			photo: this.state.photo
 		};
-		console.log(body);
     this.props.submit(this.type, body);
   }
 
@@ -126,7 +123,6 @@ export default class basic extends Component {
 														linkedinid: this.state.linkedinid,
 														photo: this.state.photo !== null ? this.state.photo.name : null
 													};
-													console.log(body);
 											    this.props.submit(this.type, body);
 												}).catch((error) => {
 													alert("Photo could not be removed... Try again" + error);
