@@ -79,7 +79,7 @@ class PositionsOfResponsibilities extends React.Component {
         <UncontrolledCollapse toggler="#positionsofresponsibilities"><CardBody>
           <div className="row">
                 {
-                  this.props.fields.length === 0 ? <p>Nothing is Added</p> :
+                  this.props.fields === null ? <p>Nothing is Added</p> :
                   this.props.fields.map((nan,index,summa)=>{
                     return(
                       <div className="col-12 col-md-6 col-lg-4" key={"positionsofresponsibility"+index}>

@@ -35,7 +35,7 @@ export default class basic extends Component {
 		return (
 			<Fragment>
 				{
-					this.props.fields === {} ? <React.Fragment></React.Fragment>:
+					this.props.fields === null ? <React.Fragment></React.Fragment>:
 						<Fragment>
 						<div className="col-12 col-md-6 col-lg-4">
 						<div className="card col-auto">
@@ -67,7 +67,7 @@ export default class basic extends Component {
 				{
 					<Fragment>
 					<button className="btn-info col-6" onClick={this.toggle}>
-							{this.props.fields === {} ? "Add" : "Edit"}
+							{this.props.fields === null ? "Add" : "Edit"}
 					</button>
 					<Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
 						<ModalHeader toggle={this.toggle}>Edit the Academic Project</ModalHeader>

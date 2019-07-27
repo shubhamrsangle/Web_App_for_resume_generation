@@ -17,18 +17,18 @@ import axios from 'axios';
 export default class Form extends React.Component {
 
   state = {
-    basic : {},
-		educationdetails : [],
-		areasofinterest : [],
-		technicalproficiency : [],
-		publications :[],
-		academicprojects : [],
-		experience : [],
-		courses : [],
-		achievements : [],
-		positionsofresponsibility: [],
-		extracurricularactivities : [],
-		hobbiesandinterests : []
+    basic : null,
+		educationdetails : null,
+		areasofinterest : null,
+		technicalproficiency : null,
+		publications :null,
+		academicprojects : null,
+		experience : null,
+		courses : null,
+		achievements : null,
+		positionsofresponsibility: null,
+		extracurricularactivities : null,
+		hobbiesandinterests : null
   }
 
   removeFunction = (type, index) => {
@@ -37,6 +37,8 @@ export default class Form extends React.Component {
       case 0:
           array = [...this.state.academicprojects];
           array.splice(index,1);
+          if(array.length === 0)
+            array = null;
           this.setState({academicprojects:array});
           break;
       case 1:
@@ -169,6 +171,7 @@ export default class Form extends React.Component {
   submitHandler = (type, data) => {
     switch(type) {
       case 0:
+          this.state.academicprojects === null ? this.setState({academicprojects:data}) :
           this.setState({academicprojects: [...this.state.academicprojects, data]});
           break;
       case 1:
