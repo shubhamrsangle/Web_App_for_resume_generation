@@ -17,15 +17,18 @@ export default class basic extends Component {
 			linkedinid: "",
 			img: null
 		}
-		const { name,email,degree,linkedinid } = JSON.parse(localStorage.getItem('basic'));
-		if(name)
-			this.state.name = name;
-		if(email)
-			this.state.email = email;
-		if(degree)
-			this.state.degree = degree;
-		if(linkedinid)
-			this.state.linkedinid = linkedinid;
+		const basicLocal = JSON.parse(localStorage.getItem('basic'));
+		if(basicLocal)
+		{
+			if(basicLocal.name)
+				this.state.name = basicLocal.name;
+			if(basicLocal.email)
+				this.state.email = basicLocal.email;
+			if(basicLocal.degree)
+				this.state.degree = basicLocal.degree;
+			if(basicLocal.linkedinid)
+				this.state.linkedinid = basicLocal.linkedinid;
+		}
 	}
 
 	eventHandler = (e) => {this.setState({[e.target.name]: e.target.value})}
