@@ -30,7 +30,7 @@ export default class Form extends React.Component {
       achievements : [],
       positionsofresponsibility: [],
       extracurricularactivities : [],
-      hobbiesandinterests : []  
+      hobbiesandinterests : []
       }
     //----------------------------------------------------------//
     const basicLocal = JSON.parse(localStorage.getItem('basic'));
@@ -122,7 +122,7 @@ export default class Form extends React.Component {
           array = [...this.state.courses];
           array.splice(index,1);
           this.setState({courses:array},() => {
-            localStorage.setItem('courses',JSON.stringify(this.state.courses)); 
+            localStorage.setItem('courses',JSON.stringify(this.state.courses));
           });
           break;
       case 5:
@@ -195,7 +195,7 @@ export default class Form extends React.Component {
           array.splice(index,0,data);
           this.setState({achievements:array},() => {
             localStorage.setItem('achievements',JSON.stringify(this.state.achievements));
-          }); 
+          });
           break;
       case 2:
           array = [...this.state.areasofinterest];

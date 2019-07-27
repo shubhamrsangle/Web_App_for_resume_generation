@@ -5,7 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 export default class basic extends Component {
 
 	type = 3;
-	
+
 	constructor(props){
 		super(props);
 		this.state = {
@@ -31,7 +31,8 @@ export default class basic extends Component {
 		}
 	}
 
-	eventHandler = (e) => {this.setState({[e.target.name]: e.target.value})}
+	eventHandler = (e) => {
+		this.setState({[e.target.name]: e.target.value})}
 
 	toggle = () => {
 		this.setState({modal: !this.state.modal});
@@ -76,7 +77,7 @@ export default class basic extends Component {
 				{
 					this.props.fields === {} ? <React.Fragment></React.Fragment>:
 						<Fragment>
-						<div className="col-12 col-md-6 col-lg-4">
+						<div className="col-12 col-md-6">
 						<div className="card col-auto">
 							<div className="card-header">
 								<h3 className="card-title">Details</h3>
@@ -109,7 +110,7 @@ export default class basic extends Component {
 								{
 									this.state.photo === null ? <React.Fragment></React.Fragment> :
 									 	<React.Fragment>
-											<button className="btn-danger" onClick={() => { 
+											<button className="btn-danger" onClick={() => {
 												axios.post('http://localhost:4000/serverport/removePhoto')
 												.then((response) => {
 													alert('removed');

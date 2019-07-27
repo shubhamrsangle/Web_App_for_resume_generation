@@ -97,6 +97,15 @@ ServerPortRouter.route('/').get(function (req, res) {
 });
 
 
+function updateValueLatex(str) {
+  str = str.split("%").join("\\%");
+  str = str.split("'").join("\'");
+  str = str.split("{").join("\\{");
+  str = str.split("}").join("\\}");
+  str = str.split('"').join('\"');
+  return str;
+}
+
 
 function finished(err)
 {
@@ -171,11 +180,11 @@ function make(raw) {
 function basic(basic) {
     const fs = require('fs');
     fs.appendFileSync('./server/routes/latex.tex', basic_begin);
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${basic['name']}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${basic['degree']}}\n`)
+    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['name'])}}\n`)
+    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['degree'])}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"Indian Institute of Technology Tirupati, India"}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${basic['email']}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${basic['linkdinid']}}\n`)
+    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['email'])}}\n`)
+    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"www.linkedin.com/in/"+updateValueLatex(basic['linkedinid'])}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', basic_end1);
     if(currentFile !== ""){
       var profilepath=path.join(__dirname, currentFile);
@@ -203,7 +212,7 @@ function educationDetails(educationDetails) {
                 tem += (i['programme'].charAt(k));
             }
         }
-        fs.appendFileSync('./server/routes/latex.tex',`${tem} & ${i['institute']} & ${i['year']} & ${i['marks']}\\\\ \n`);
+        fs.appendFileSync('./server/routes/latex.tex',`${updateValueLatex(tem)} & ${updateValueLatex(i['institute'])} & ${updateValueLatex(i['year'])} & ${updateValueLatex(i['marks'])}\\\\ \n`);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{tabular}\n\n");
 }
@@ -220,7 +229,7 @@ function areaOfInterest(areaOfInterest) {
         tem += areaOfInterest[i]['interest'];
         if (i < areaOfInterest.length - 1) tem += ', ';
     }
-    fs.appendFileSync('./server/routes/latex.tex', `${tem}}}\n\\end{itemize}\n\n`);
+    fs.appendFileSync('./server/routes/latex.tex', `${updateValueLatex(tem)}}}\n\\end{itemize}\n\n`);
 }
 
 function technicalProficiency(technicalProficiency) {
@@ -232,7 +241,7 @@ function technicalProficiency(technicalProficiency) {
     for (let i = 0; i < technicalProficiency.length; i++) {
         let title = technicalProficiency[i]['title'];
         let values = technicalProficiency[i]['titlevalue'];
-        let tem = `\\textbf{\\small{${title}}} &: &{{${values}}} \\\\\n`;
+        let tem = `\\textbf{\\small{${updateValueLatex(title)}}} &: &{{${updateValueLatex(values)}}} \\\\\n`;
         fs.appendFileSync('./server/routes/latex.tex', tem);
     }
     fs.appendFileSync('./server/routes/latex.tex', "\\end{tabular}\n\n");
@@ -250,11 +259,11 @@ function publications(publications) {
         let details = publications[i]['pubdescription'];
         let doi = publications[i]['pubdoi'];
         fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{1pt}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${title}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline Authors: ${author}\n`);
-    fs.appendFileSync('./server/routes/latex.tex', `\\newline Place of Publication: ${place}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline Description: ${details}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline DOI: ${doi}\n\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(title)}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline Authors: ${updateValueLatex(author)}\n`);
+    fs.appendFileSync('./server/routes/latex.tex', `\\newline Place of Publication: ${updateValueLatex(place)}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline Description: ${updateValueLatex(details)}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\newline DOI: ${updateValueLatex(doi)}\n\n`);
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
 }
@@ -268,20 +277,20 @@ function academicProject(academicProject) {
         let guide = academicProject[i]['projectguide'];
         let description = academicProject[i]['projectdescription'];
         let duration = academicProject[i]['projectduration'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${project_name}}`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(project_name)}}`);
         if (guide == "") {
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${duration}]}}\\/}}\n`);
+            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
             fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n
-            \\item ${description} \n
+            \\item ${updateValueLatex(description)} \n
             \\end{itemize*}\n
             \\end{itemize*}\n\n`);
         }
         else {
-            fs.appendFileSync('./server/routes/latex.tex', `\n \\\\ {(Guide : ${guide})}`);
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${duration}]}}\\/}}\n`);
+            fs.appendFileSync('./server/routes/latex.tex', `\n \\\\ {(Guide : ${updateValueLatex(guide)})}`);
+            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
             fs.appendFileSync('./server/routes/latex.tex', '\\begin{itemize*}\n');
             fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{.00pt}\n
-            \\item \\textbf{Abstract}: ${description} \n
+            \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
             \\end{itemize*} \n
             \\end{itemize*} \n\n`);
         }
@@ -297,20 +306,20 @@ function experience(experience) {
         let guide = experience[i]['expguide'];
         let description = experience[i]['expdescription'];
         let duration = experience[i]['expduration'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${exper}}`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(exper)}}`);
         if (guide == "") {
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${duration}]}}\\/}}\n`);
+            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
             fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n
-            \\item ${description} \n
+            \\item ${updateValueLatex(description)} \n
             \\end{itemize*}\n
             \\end{itemize*}\n\n`);
         }
         else {
-            fs.appendFileSync('./server/routes/latex.tex', `\n \\\\ {(Guide : ${guide})}`);
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${duration}]}}\\/}}\n`);
+            fs.appendFileSync('./server/routes/latex.tex', `\n \\\\ {(Guide : ${updateValueLatex(guide)})}`);
+            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
             fs.appendFileSync('./server/routes/latex.tex', '\\begin{itemize*}\n');
             fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{.00pt}\n
-            \\item \\textbf{Abstract}: ${description} \n
+            \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
             \\end{itemize*} \n
             \\end{itemize*} \n\n`);
         }
@@ -327,8 +336,8 @@ function relevantCourses(relevantCourses) {
         if (i + 1 < relevantCourses.length) {
             course2 = relevantCourses[i + 1]['course'];
         }
-        fs.appendFileSync('./server/routes/latex.tex', `\\hspace{0.9pc}$\\bullet$ ${course1}`)
-        if (course2 != "") fs.appendFileSync('./server/routes/latex.tex', `&$\\bullet$ ${course2}\\\\[0.05in]\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\hspace{0.9pc}$\\bullet$ ${updateValueLatex(course1)}`)
+        if (course2 != "") fs.appendFileSync('./server/routes/latex.tex', `&$\\bullet$ ${updateValueLatex(course2)}\\\\[0.05in]\n`);
         else fs.appendFileSync('./server/routes/latex.tex', '\n');
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{tabular}\n\n`);
@@ -340,7 +349,7 @@ function achievements(achievements) {
     \\begin{itemize} \n \\setlength{\\itemsep}{1pt}\n`);
     for (let i = 0; i < achievements.length; i++) {
         let achievement = achievements[i]['achievement'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${achievement}\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(achievement)}\n`);
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
 }
@@ -352,9 +361,9 @@ function positonsOfResponsibility(positonsOfResponsibility) {
         let position = positonsOfResponsibility[i]['position'];
         let duration = positonsOfResponsibility[i]['posduration'];
         let workdescription = positonsOfResponsibility[i]['workdescription'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\textbf{${position}}  \\hfill {\\small{{\\textbf{[${duration}]}}}\\/} \n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\textbf{${updateValueLatex(position)}}  \\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}}\\/} \n`);
         fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*} \n
-        \\item ${workdescription} \n
+        \\item ${updateValueLatex(workdescription)} \n
         \\end{itemize*}\n\n`)
     }
 }
@@ -366,7 +375,7 @@ function extraCurricularActivities(extraCurricularActivities) {
     \\setlength{\\itemsep}{1pt}\n`);
     for (let i = 0; i < extraCurricularActivities.length; i++) {
         let activity = extraCurricularActivities[i]['activity'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${activity} \\hfill \n`); // error
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(activity)} \\hfill \n`); // error
     }
     fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
 }
@@ -378,7 +387,7 @@ function hobbies(hobbies) {
         let hobby = hobbies[i]['hobby'];
         fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize}
         \\setlength{\\itemsep}{1pt}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${hobby}\n\\end{itemize}\n\n`);
+        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(hobby)}\n\\end{itemize}\n\n`);
     }
 }
 module.exports = ServerPortRouter;
