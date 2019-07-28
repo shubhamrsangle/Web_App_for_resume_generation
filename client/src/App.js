@@ -21,7 +21,7 @@ export default class App extends Component {
               />*/}
               <FormCombined />
         </div>
-        <div style={{background: '#ccd1c7',margin: '10px', padding: '10px'}} className="Footer">
+        <div style={{background: '#ccd1c7',margin: '10px', padding: '10px'}} className="footer">
           <h3 align="center">Created and Designed by</h3>
           <div align="center" className="Names">
             <a href="https://github.com/shubhamrsangle">ShubhamSangle  </a>

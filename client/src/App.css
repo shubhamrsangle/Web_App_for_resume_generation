@@ -7,3 +7,7 @@
 .navbar-brand{
   font-size: 30px;
 }
+
+.card-header{
+  padding: 100px auto;
+}

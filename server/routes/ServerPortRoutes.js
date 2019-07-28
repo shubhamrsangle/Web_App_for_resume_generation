@@ -67,6 +67,9 @@ ServerPortRouter.route("/upload").post( async (req,res) => {
 });
 
 ServerPortRouter.route('/').post(function (req, res) {
+  if(localStorage.getItem('photoName') === null){
+    localStorage.setItem("photoName", uuid());
+  }
     let raw = req.body;
     if(raw.basic.photo === null && localStorage.getItem('currentFile') !== null){
       fs.unlink('./server/routes/images/' + localStorage.getItem('currentFile'), function(err) {
@@ -80,9 +83,9 @@ ServerPortRouter.route('/').post(function (req, res) {
     make(raw);
 
     //Input latex file
-    const input = fs.createReadStream(path.join( __dirname , 'latex.tex'));
+    const input = fs.createReadStream(path.join( __dirname ,'tex', localStorage.getItem('photoName') + '.tex'));
     //Name of output File
-    const output = fs.createWriteStream(path.join( __dirname , 'output.pdf'));
+    const output = fs.createWriteStream(path.join( __dirname ,'pdf', localStorage.getItem('photoName')+'.pdf'));
     //Object for pdf generation
     const pdf = latex(input);
 
@@ -107,7 +110,7 @@ ServerPortRouter.route('/imgFile').get((req,res) => {
 });
 
 ServerPortRouter.route('/').get(function (req, res) {
-    res.download(path.join(__dirname,'output.pdf'),'CV.pdf');
+    res.download(path.join(__dirname,'pdf',localStorage.getItem('photoName')+'.pdf'),'CV.pdf');
 });
 
 
@@ -144,14 +147,14 @@ let educationDetails_begin3 = "\\hline\n\\textbf{Program} & \\textbf{Institute} 
 
 function make(raw) {
     const fs = require('fs');
-    fs.writeFileSync('./server/routes/latex.tex', str1);
-    fs.appendFileSync('./server/routes/latex.tex', str2);
-    fs.appendFileSync('./server/routes/latex.tex', str3);
-    fs.appendFileSync('./server/routes/latex.tex', def1);
-    fs.appendFileSync('./server/routes/latex.tex', def2);
-    fs.appendFileSync('./server/routes/latex.tex', def3);
-    fs.appendFileSync('./server/routes/latex.tex', mar);
-    fs.appendFileSync('./server/routes/latex.tex', "\\begin{document}\n\n"); // document begins
+    fs.writeFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', str1);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', str2);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', str3);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', def1);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', def2);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', def3);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', mar);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', "\\begin{document}\n\n"); // document begins
     if(raw['basic']!=null){
          basic(raw['basic']);
     }
@@ -188,32 +191,32 @@ function make(raw) {
     if(raw['hobbiesandinterests'].length>0){
         hobbies(raw['hobbiesandinterests']);
     }
-    fs.appendFileSync('./server/routes/latex.tex', "\\end{document}\n"); // document ends
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', "\\end{document}\n"); // document ends
 }
 
 function basic(basic) {
     const fs = require('fs');
-    fs.appendFileSync('./server/routes/latex.tex', basic_begin);
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['name'])}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['degree'])}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"Indian Institute of Technology Tirupati, India"}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['email'])}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"www.linkedin.com/in/"+updateValueLatex(basic['linkedinid'])}}\n`)
-    fs.appendFileSync('./server/routes/latex.tex', basic_end1);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', basic_begin);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item[] \\textbf{${updateValueLatex(basic['name'])}}\n`)
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item[] \\textbf{${updateValueLatex(basic['degree'])}}\n`)
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item[] \\textbf{${"Indian Institute of Technology Tirupati, India"}}\n`)
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item[] \\textbf{${updateValueLatex(basic['email'])}}\n`)
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item[] \\textbf{${"www.linkedin.com/in/"+updateValueLatex(basic['linkedinid'])}}\n`)
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', basic_end1);
     if(localStorage.getItem('currentFile')){
       var profilepath=path.join(__dirname,'images', localStorage.getItem('currentFile'));
       profilepath = profilepath.split('\\').join('/');
       let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+profilepath+"}}}\n";
-      fs.appendFileSync('./server/routes/latex.tex', basic_end_photo);
+      fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', basic_end_photo);
     }
-    fs.appendFileSync('./server/routes/latex.tex', basic_end3);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', basic_end3);
 }
 
 function educationDetails(educationDetails) {
     const fs = require('fs');
-    fs.appendFileSync('./server/routes/latex.tex', educationDetails_begin1);
-    fs.appendFileSync('./server/routes/latex.tex', educationDetails_begin2);
-    fs.appendFileSync('./server/routes/latex.tex', educationDetails_begin3);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', educationDetails_begin1);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', educationDetails_begin2);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', educationDetails_begin3);
     for (let j = 0; j < educationDetails.length; j++) {
         let i = educationDetails[j];
         let tem = "", n = i['programme'].length;
@@ -226,84 +229,84 @@ function educationDetails(educationDetails) {
                 tem += (i['programme'].charAt(k));
             }
         }
-        fs.appendFileSync('./server/routes/latex.tex',`${updateValueLatex(tem)} & ${updateValueLatex(i['institute'])} & ${updateValueLatex(i['year'])} & ${updateValueLatex(i['marks'])}\\\\ \n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex',`${updateValueLatex(tem)} & ${updateValueLatex(i['institute'])} & ${updateValueLatex(i['year'])} & ${updateValueLatex(i['marks'])}\\\\ \n`);
     }
-    fs.appendFileSync('./server/routes/latex.tex', "\\end{tabular}\n\n");
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', "\\end{tabular}\n\n");
 }
 
 function areaOfInterest(areaOfInterest) {
     const fs = require('fs');
     let aof_begin1 = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Areas of Interest}}}\n";
     let aof_begin2 = "\\begin{itemize}\\setlength{\\itemsep}{1pt}\n";
-    fs.appendFileSync('./server/routes/latex.tex', aof_begin1);
-    fs.appendFileSync('./server/routes/latex.tex', aof_begin2);
-    fs.appendFileSync('./server/routes/latex.tex', "\\item {{");
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', aof_begin1);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', aof_begin2);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', "\\item {{");
     let tem = "";
     for (let i = 0; i < areaOfInterest.length; i++) {
         tem += areaOfInterest[i]['interest'];
         if (i < areaOfInterest.length - 1) tem += ', ';
     }
-    fs.appendFileSync('./server/routes/latex.tex', `${updateValueLatex(tem)}}}\n\\end{itemize}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `${updateValueLatex(tem)}}}\n\\end{itemize}\n\n`);
 }
 
 function technicalProficiency(technicalProficiency) {
     const fs = require('fs');
     let tp1 = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Technical Proficiency}}}\\\\ \n\n";
     let tp2 = "\\begin{tabular}{p{1.6in}p{0.1in}p{4.5in}}\n";
-    fs.appendFileSync('./server/routes/latex.tex', tp1);
-    fs.appendFileSync('./server/routes/latex.tex', tp2);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', tp1);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', tp2);
     for (let i = 0; i < technicalProficiency.length; i++) {
         let title = technicalProficiency[i]['title'];
         let values = technicalProficiency[i]['titlevalue'];
         let tem = `\\textbf{\\small{${updateValueLatex(title)}}} &: &{{${updateValueLatex(values)}}} \\\\\n`;
-        fs.appendFileSync('./server/routes/latex.tex', tem);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', tem);
     }
-    fs.appendFileSync('./server/routes/latex.tex', "\\end{tabular}\n\n");
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', "\\end{tabular}\n\n");
 }
 
 function publications(publications) {
     const fs = require('fs');
     let pb = `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Publications}}} \n
     \\begin{itemize}\n\n`;
-    fs.appendFileSync('./server/routes/latex.tex', pb);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', pb);
     for (let i = 0; i < publications.length; i++) {
         let title = publications[i]['pubtitle'];
         let author = publications[i]['pubauthors'];
     let place = publications[i]['pubplace'];
         let details = publications[i]['pubdescription'];
         let doi = publications[i]['pubdoi'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{1pt}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(title)}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline Authors: ${updateValueLatex(author)}\n`);
-    fs.appendFileSync('./server/routes/latex.tex', `\\newline Place of Publication: ${updateValueLatex(place)}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline Description: ${updateValueLatex(details)}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\newline DOI: ${updateValueLatex(doi)}\n\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\setlength{\\itemsep}{1pt}\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item ${updateValueLatex(title)}\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\newline Authors: ${updateValueLatex(author)}\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\newline Place of Publication: ${updateValueLatex(place)}\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\newline Description: ${updateValueLatex(details)}\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\newline DOI: ${updateValueLatex(doi)}\n\n`);
     }
-    fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\end{itemize}\n\n`);
 }
 
 function academicProject(academicProject) {
     const fs = require('fs');
     let ap = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Academic Projects}}}\n\n";
-    fs.appendFileSync('./server/routes/latex.tex', ap);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', ap);
     for (let i = 0; i < academicProject.length; i++) {
         let project_name = academicProject[i]['projectname'];
         let guide = academicProject[i]['projectguide'];
         let description = academicProject[i]['projectdescription'];
         let duration = academicProject[i]['projectduration'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(project_name)}}`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(project_name)}}`);
         if (guide == "") {
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
-            fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize*}\n
             \\item ${updateValueLatex(description)} \n
             \\end{itemize*}\n
             \\end{itemize*}\n\n`);
         }
         else {
-            fs.appendFileSync('./server/routes/latex.tex', `\n \\\\ {(Guide : ${updateValueLatex(guide)})}`);
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
-            fs.appendFileSync('./server/routes/latex.tex', '\\begin{itemize*}\n');
-            fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{.00pt}\n
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\n \\\\ {(Guide : ${updateValueLatex(guide)})}`);
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', '\\begin{itemize*}\n');
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\setlength{\\itemsep}{.00pt}\n
             \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
             \\end{itemize*} \n
             \\end{itemize*} \n\n`);
@@ -314,25 +317,25 @@ function academicProject(academicProject) {
 function experience(experience) {
     const fs = require('fs');
     let ap = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Experience}}}\n\n";
-    fs.appendFileSync('./server/routes/latex.tex', ap);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', ap);
     for (let i = 0; i < experience.length; i++) {
         let exper = experience[i]['experience'];
         let guide = experience[i]['expguide'];
         let description = experience[i]['expdescription'];
         let duration = experience[i]['expduration'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(exper)}}`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(exper)}}`);
         if (guide == "") {
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
-            fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*}\n
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize*}\n
             \\item ${updateValueLatex(description)} \n
             \\end{itemize*}\n
             \\end{itemize*}\n\n`);
         }
         else {
-            fs.appendFileSync('./server/routes/latex.tex', `\n \\\\ {(Guide : ${updateValueLatex(guide)})}`);
-            fs.appendFileSync('./server/routes/latex.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
-            fs.appendFileSync('./server/routes/latex.tex', '\\begin{itemize*}\n');
-            fs.appendFileSync('./server/routes/latex.tex', `\\setlength{\\itemsep}{.00pt}\n
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\n \\\\ {(Guide : ${updateValueLatex(guide)})}`);
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', '\\begin{itemize*}\n');
+            fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\setlength{\\itemsep}{.00pt}\n
             \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
             \\end{itemize*} \n
             \\end{itemize*} \n\n`);
@@ -344,39 +347,39 @@ function relevantCourses(relevantCourses) {
     const fs = require('fs');
     let rc = `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Relevant Courses}}}\\\\[0.08in]
     \\begin{tabular}{p{3.5in}p{3in}p{2.5in}}\n`;
-    fs.appendFileSync('./server/routes/latex.tex', rc);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', rc);
     for (let i = 0; i < relevantCourses.length; i = i + 2) {
         let course1 = relevantCourses[i]['course'], course2 = "";
         if (i + 1 < relevantCourses.length) {
             course2 = relevantCourses[i + 1]['course'];
         }
-        fs.appendFileSync('./server/routes/latex.tex', `\\hspace{0.9pc}$\\bullet$ ${updateValueLatex(course1)}`)
-        if (course2 != "") fs.appendFileSync('./server/routes/latex.tex', `&$\\bullet$ ${updateValueLatex(course2)}\\\\[0.05in]\n`);
-        else fs.appendFileSync('./server/routes/latex.tex', '\n');
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\hspace{0.9pc}$\\bullet$ ${updateValueLatex(course1)}`)
+        if (course2 != "") fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `&$\\bullet$ ${updateValueLatex(course2)}\\\\[0.05in]\n`);
+        else fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', '\n');
     }
-    fs.appendFileSync('./server/routes/latex.tex', `\\end{tabular}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\end{tabular}\n\n`);
 }
 
 function achievements(achievements) {
     const fs = require('fs');
-    fs.appendFileSync('./server/routes/latex.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Achievements}}}\\\\[0.08in]\n
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Achievements}}}\\\\[0.08in]\n
     \\begin{itemize} \n \\setlength{\\itemsep}{1pt}\n`);
     for (let i = 0; i < achievements.length; i++) {
         let achievement = achievements[i]['achievement'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(achievement)}\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item ${updateValueLatex(achievement)}\n`);
     }
-    fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\end{itemize}\n\n`);
 }
 
 function positonsOfResponsibility(positonsOfResponsibility) {
     const fs = require('fs');
-    fs.appendFileSync('./server/routes/latex.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Positions of Responsibility}}}\\\\\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Positions of Responsibility}}}\\\\\n\n`);
     for (let i = 0; i < positonsOfResponsibility.length; i++) {
         let position = positonsOfResponsibility[i]['position'];
         let duration = positonsOfResponsibility[i]['posduration'];
         let workdescription = positonsOfResponsibility[i]['workdescription'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\textbf{${updateValueLatex(position)}}  \\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}}\\/} \n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize*} \n
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\textbf{${updateValueLatex(position)}}  \\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}}\\/} \n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize*} \n
         \\item ${updateValueLatex(workdescription)} \n
         \\end{itemize*}\n\n`)
     }
@@ -384,24 +387,24 @@ function positonsOfResponsibility(positonsOfResponsibility) {
 
 function extraCurricularActivities(extraCurricularActivities) {
     const fs = require('fs');
-    fs.appendFileSync('./server/routes/latex.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Extra Curricular activities}}}\n\n`);
-    fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize}\n
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Extra Curricular activities}}}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize}\n
     \\setlength{\\itemsep}{1pt}\n`);
     for (let i = 0; i < extraCurricularActivities.length; i++) {
         let activity = extraCurricularActivities[i]['activity'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(activity)} \\hfill \n`); // error
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item ${updateValueLatex(activity)} \\hfill \n`); // error
     }
-    fs.appendFileSync('./server/routes/latex.tex', `\\end{itemize}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\end{itemize}\n\n`);
 }
 
 function hobbies(hobbies) {
     const fs = require('fs');
-    fs.appendFileSync('./server/routes/latex.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Hobbies and Interests}}}\n\n`);
+    fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Hobbies and Interests}}}\n\n`);
     for (let i = 0; i < hobbies.length; i++) {
         let hobby = hobbies[i]['hobby'];
-        fs.appendFileSync('./server/routes/latex.tex', `\\begin{itemize}
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\begin{itemize}
         \\setlength{\\itemsep}{1pt}\n`);
-        fs.appendFileSync('./server/routes/latex.tex', `\\item ${updateValueLatex(hobby)}\n\\end{itemize}\n\n`);
+        fs.appendFileSync(path.join('./server/routes/tex', localStorage.getItem('photoName')) + '.tex', `\\item ${updateValueLatex(hobby)}\n\\end{itemize}\n\n`);
     }
 }
 module.exports = ServerPortRouter;
