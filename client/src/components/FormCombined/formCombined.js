@@ -16,8 +16,9 @@ import axios from 'axios';
 
 export default class Form extends React.Component {
 
-  constructor(){
+  constructor() {
     super();
+    localStorage.setItem('photoName',"summa");
     this.state = {
       basic : {},
       educationdetails : [],

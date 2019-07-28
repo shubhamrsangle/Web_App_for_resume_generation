@@ -102,8 +102,8 @@ export default class basic extends Component {
 								<div className="col-6 align-self-center">
 								<figure className="figure">
 									<img className="figure-img rounded mx-auto d-block" width="70%" height="auto"
-										src={this.state.photo !== null ? "http://localhost:4000/passportphoto." + this.state.photo.name.split('.').pop() : "http://localhost:4000/noProfilePic.jpg"} alt="No Profile Pic" />
-									<figcaption className="text-center figure-caption">
+										src={this.state.photo !== null ? "http://localhost:4000/serverport/imgFile" : "http://localhost:4000/noProfilePic.jpg"} alt="No Profile Pic" />
+									<figcaption className="text-center figure-caption ">
 										{this.state.photo ? "Passport Size Photo" : "Add Your Photo"}
 									</figcaption>
 								</figure>
@@ -122,7 +122,7 @@ export default class basic extends Component {
 														email: this.state.email,
 														degree: this.state.degree,
 														linkedinid: this.state.linkedinid,
-														photo: this.state.photo !== null ? this.state.photo.name : null
+														photo: this.state.photo !== null ? this.state.photo : null
 													};
 											    this.props.submit(this.type, body);
 												}).catch((error) => {

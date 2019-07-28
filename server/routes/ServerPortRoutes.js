@@ -1,28 +1,32 @@
 const express = require('express');
 const app = express();
 const ServerPortRouter = express.Router();
+const uuid = require('uuid');
 app.use('/serverport', ServerPortRouter);
 'use strict';
 
 const latex = require('node-latex');
 const fs = require('fs');
 const path = require('path');
+const localStorage = require('localStorage');
 
 const multer = require("multer");
 
 var currentFile = "";
+var fileName = "";
 
 const storage = multer.diskStorage({
    destination: "./server/routes/",
-   filename: function(req, file, cb){
-     if(currentFile !== ""){
-       fs.unlink('./server/routes/' + currentFile, function(err) {
+   filename:  async function(req, file, cb) {
+     if(localStorage.getItem("currentFile")){
+       console.log("Trying to Remove");
+       fs.unlink('./server/routes/' + localStorage.getItem('currentFile'), function(err) {
          if(err)
-          console.log(err);
+          console.log("error");
        });
      }
-      currentFile = "passportphoto" + path.extname(file.originalname);
-      cb(null,"passportphoto" + path.extname(file.originalname));
+      await localStorage.setItem("currentFile",localStorage.getItem('photoName') + path.extname(file.originalname));
+      cb(null, localStorage.getItem("currentFile"));
    }
 });
 
@@ -31,20 +35,26 @@ const upload = multer({
 }).single('photo');
 
 ServerPortRouter.route("/removePhoto").post((req,res) => {
-  if(currentFile!==""){
-    fs.unlink('./server/routes/' + currentFile, function(err) {
+  if(localStorage.getItem('currentFile') !== null){
+    fs.unlink('./server/routes/' + localStorage.getItem('currentFile'), function(err) {
       if (err)
         return res.status(404);
 
    });
-   currentFile = "";
+   localStorage.removeItem('currentFile');
    return res.status(200).json({msg:"done"});
  }
  return res.status(400).json({msg:"suma"});
 });
 
-ServerPortRouter.route("/upload").post( (req,res) => {
-
+ServerPortRouter.route("/upload").post( async (req,res) => {
+    if(localStorage.getItem('photoName')){
+    }
+    else{
+      const temp = uuid();
+      await localStorage.setItem('photoName', temp);
+    }
+    localStorage.getItem
     upload(req,res, (err) => {
       if(err){
         return res.status(440);
@@ -62,12 +72,12 @@ ServerPortRouter.route("/upload").post( (req,res) => {
 
 ServerPortRouter.route('/').post(function (req, res) {
     let raw = req.body;
-    if(raw.basic.photo === null && currentFile !== ""){
-      fs.unlink('./server/routes/' + currentFile, function(err) {
+    if(raw.basic.photo === null && localStorage.getItem('currentFile') !== null){
+      fs.unlink('./server/routes/' + localStorage.getItem('currentFile'), function(err) {
         if(err)
           return res.status(404);
      });
-     currentFile = "";
+     localStorage.removeItem('currentFile');
     }
     logopath=path.join(__dirname,'logoupdated.png');
     logopath=logopath.split('\\').join('/');
@@ -90,6 +100,14 @@ ServerPortRouter.route('/').post(function (req, res) {
         console.log('PDF generated!');
         res.send(true);
     });
+});
+
+ServerPortRouter.route('/imgFile').get((req,res) => {
+    if(localStorage.getItem('currentFile'))
+      res.sendFile(path.join(__dirname, localStorage.getItem('currentFile')));
+    else {
+      res.sendFile(path.join(__dirname, "noProfilePic.jpg"));
+    }
 });
 
 ServerPortRouter.route('/').get(function (req, res) {
@@ -186,8 +204,8 @@ function basic(basic) {
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${updateValueLatex(basic['email'])}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"www.linkedin.com/in/"+updateValueLatex(basic['linkedinid'])}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', basic_end1);
-    if(currentFile !== ""){
-      var profilepath=path.join(__dirname, currentFile);
+    if(localStorage.getItem('currentFile')){
+      var profilepath=path.join(__dirname, localStorage.getItem('currentFile'));
       profilepath = profilepath.split('\\').join('/');
       let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+profilepath+"}}}\n";
       fs.appendFileSync('./server/routes/latex.tex', basic_end_photo);
