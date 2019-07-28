@@ -13,7 +13,7 @@ export default class basic extends Component {
 			name: "",
 			email: "",
 			degree: "B.Tech",
-			photo: null,
+			photo: "",
 			linkedinid: "",
 			img: null
 		}
@@ -29,6 +29,8 @@ export default class basic extends Component {
 			if(basicLocal.linkedinid)
 				this.state.linkedinid = basicLocal.linkedinid;
 		}
+		if(localStorage.getItem('photo'))
+			this.state.photo = localStorage.getItem('photo');
 	}
 
 	eventHandler = (e) => {
@@ -53,8 +55,10 @@ export default class basic extends Component {
 	        await axios.post("http://localhost:4000/serverport/upload",formData,config)
 	            .then((response) => {
 								this.setState({
-									photo:this.state.img
+									photo:this.state.img.name
 								});
+								localStorage.setItem("photo",this.state.img.name);
+								document.getElementById('passportPhoto').src = "http://localhost:4000/serverport/imgFile";
 								this.setState({img:null});
 	            }).catch((error) => {
 								alert("File not uploaded... Try again");
@@ -65,8 +69,7 @@ export default class basic extends Component {
 			name: this.state.name,
 			email: this.state.email,
 			degree: this.state.degree,
-			linkedinid: this.state.linkedinid,
-			photo: this.state.photo
+			linkedinid: this.state.linkedinid
 		};
     this.props.submit(this.type, body);
   }
@@ -101,30 +104,26 @@ export default class basic extends Component {
 								</div>
 								<div className="col-6 align-self-center">
 								<figure className="figure">
-									<img className="figure-img rounded mx-auto d-block" width="70%" height="auto"
-										src={this.state.photo !== null ? "http://localhost:4000/serverport/imgFile" : "http://localhost:4000/noProfilePic.jpg"} alt="No Profile Pic" />
+								{
+										<img className="figure-img rounded mx-auto d-block" width="70%" height="auto" id="passportPhoto"
+											src={`${"http://localhost:4000/serverport/imgFile"}?${Date.now()}`} alt="No Profile Pic" />
+								}
 									<figcaption className="text-center figure-caption ">
 										{this.state.photo ? "Passport Size Photo" : "Add Your Photo"}
 									</figcaption>
 								</figure>
 								{
-									this.state.photo === null ? <React.Fragment></React.Fragment> :
+									this.state.photo === "" ? <React.Fragment></React.Fragment> :
 									 	<React.Fragment>
 											<button className="btn-danger" onClick={() => {
 												axios.post('http://localhost:4000/serverport/removePhoto')
 												.then((response) => {
 													alert('removed');
 													this.setState({
-														photo:null
+														photo: ""
 													});
-													const body = {
-														name: this.state.name,
-														email: this.state.email,
-														degree: this.state.degree,
-														linkedinid: this.state.linkedinid,
-														photo: this.state.photo !== null ? this.state.photo : null
-													};
-											    this.props.submit(this.type, body);
+													localStorage.removeItem("photo");
+													document.getElementById('passportPhoto').src = "http://localhost:4000/serverport/imgFile";
 												}).catch((error) => {
 													alert("Photo could not be removed... Try again" + error);
 										});

@@ -12,15 +12,12 @@ const localStorage = require('localStorage');
 
 const multer = require("multer");
 
-var currentFile = "";
-var fileName = "";
-
 const storage = multer.diskStorage({
-   destination: "./server/routes/",
+   destination: "./server/routes/images/",
    filename:  async function(req, file, cb) {
      if(localStorage.getItem("currentFile")){
        console.log("Trying to Remove");
-       fs.unlink('./server/routes/' + localStorage.getItem('currentFile'), function(err) {
+       fs.unlink('./server/routes/images/' + localStorage.getItem('currentFile'), function(err) {
          if(err)
           console.log("error");
        });
@@ -36,10 +33,9 @@ const upload = multer({
 
 ServerPortRouter.route("/removePhoto").post((req,res) => {
   if(localStorage.getItem('currentFile') !== null){
-    fs.unlink('./server/routes/' + localStorage.getItem('currentFile'), function(err) {
+    fs.unlink('./server/routes/images/' + localStorage.getItem('currentFile'), function(err) {
       if (err)
         return res.status(404);
-
    });
    localStorage.removeItem('currentFile');
    return res.status(200).json({msg:"done"});
@@ -48,13 +44,13 @@ ServerPortRouter.route("/removePhoto").post((req,res) => {
 });
 
 ServerPortRouter.route("/upload").post( async (req,res) => {
-    if(localStorage.getItem('photoName')){
+    if(localStorage.getItem('photoName') === null)
+    {
+      localStorage.setItem("photoName", uuid());
     }
     else{
-      const temp = uuid();
-      await localStorage.setItem('photoName', temp);
+      console.log(localStorage.getItem("photoName"));
     }
-    localStorage.getItem
     upload(req,res, (err) => {
       if(err){
         return res.status(440);
@@ -73,7 +69,7 @@ ServerPortRouter.route("/upload").post( async (req,res) => {
 ServerPortRouter.route('/').post(function (req, res) {
     let raw = req.body;
     if(raw.basic.photo === null && localStorage.getItem('currentFile') !== null){
-      fs.unlink('./server/routes/' + localStorage.getItem('currentFile'), function(err) {
+      fs.unlink('./server/routes/images/' + localStorage.getItem('currentFile'), function(err) {
         if(err)
           return res.status(404);
      });
@@ -104,7 +100,7 @@ ServerPortRouter.route('/').post(function (req, res) {
 
 ServerPortRouter.route('/imgFile').get((req,res) => {
     if(localStorage.getItem('currentFile'))
-      res.sendFile(path.join(__dirname, localStorage.getItem('currentFile')));
+      res.sendFile(path.join(__dirname,'images', localStorage.getItem('currentFile')));
     else {
       res.sendFile(path.join(__dirname, "noProfilePic.jpg"));
     }
@@ -205,7 +201,7 @@ function basic(basic) {
     fs.appendFileSync('./server/routes/latex.tex', `\\item[] \\textbf{${"www.linkedin.com/in/"+updateValueLatex(basic['linkedinid'])}}\n`)
     fs.appendFileSync('./server/routes/latex.tex', basic_end1);
     if(localStorage.getItem('currentFile')){
-      var profilepath=path.join(__dirname, localStorage.getItem('currentFile'));
+      var profilepath=path.join(__dirname,'images', localStorage.getItem('currentFile'));
       profilepath = profilepath.split('\\').join('/');
       let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+profilepath+"}}}\n";
       fs.appendFileSync('./server/routes/latex.tex', basic_end_photo);
