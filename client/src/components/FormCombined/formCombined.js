@@ -16,9 +16,12 @@ import axios from 'axios';
 
 export default class Form extends React.Component {
 
-  constructor() {
-    super();
-    localStorage.setItem('photoName',"summa");
+  constructor(props) {
+    super(props);
+    if(localStorage.getItem('photoName')){
+      localStorage.setItem('photoName',"summa");
+    }
+
     this.state = {
       basic : {},
       educationdetails : [],
@@ -31,7 +34,8 @@ export default class Form extends React.Component {
       achievements : [],
       positionsofresponsibility: [],
       extracurricularactivities : [],
-      hobbiesandinterests : []
+      hobbiesandinterests : [],
+			imageUploading: false
       }
     //----------------------------------------------------------//
     const basicLocal = JSON.parse(localStorage.getItem('basic'));
@@ -93,6 +97,13 @@ export default class Form extends React.Component {
     if(hobbiesandinterestsLocal)
       this.state.hobbiesandinterests = hobbiesandinterestsLocal;
     //----------------------------------------------------------//
+  }
+
+  imageUploadingFunction = (value = true) =>  {
+    if(value)
+      return this.state.imageUploading;
+    else
+      this.setState({imageUploading: !this.state.imageUploading});
   }
 
   removeFunction = (type, index) => {
@@ -364,7 +375,7 @@ export default class Form extends React.Component {
         <button className="btn btn-link" id="basic">Basic Details</button>
         </CardHeader>
         <UncontrolledCollapse toggler="#basic"><CardBody>
-              <BasicDetails fields={this.state.basic} submit={this.submitHandler}/>
+              <BasicDetails fields={this.state.basic} submit={this.submitHandler} imageUploading = {this.imageUploadingFunction}/>
           </CardBody></UncontrolledCollapse>
         </Card>
 
@@ -381,7 +392,7 @@ export default class Form extends React.Component {
         <HobbiesAndInterests fields={this.state.hobbiesandinterests} submit={this.submitHandler} removeFunc={this.removeFunction} editFunc={this.editFunction}/>
 
 
-        <button style={{margin:"10px", padding:"7px"}} className="btn btn-success btn-lg" onClick={this.finalSubmit}>Submit</button>
+        <button style={{margin:"10px", padding:"7px"}} className="btn btn-success btn-lg" onClick={this.finalSubmit} disabled={this.state.imageUploading}>Submit</button>
       </React.Fragment>
     );
   }

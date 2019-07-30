@@ -1,6 +1,6 @@
 import React , {Component,Fragment} from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Progress } from 'reactstrap';
 
 export default class basic extends Component {
 
@@ -15,7 +15,8 @@ export default class basic extends Component {
 			degree: "B.Tech",
 			photo: "",
 			linkedinid: "",
-			img: null
+			img: null,
+			percentageLoaded: 0
 		}
 		const basicLocal = JSON.parse(localStorage.getItem('basic'));
 		if(basicLocal)
@@ -41,16 +42,20 @@ export default class basic extends Component {
 	}
 
   submit = async (event) => {
-    event.preventDefault();
+		event.preventDefault();
 		this.toggle();
 
 		if (this.state.img !== null) {
+			this.props.imageUploading(false);
 			const formData = new FormData();
 	        formData.append('photo',this.state.img);
 	        const config = {
 	            headers: {
 	                'content-type': 'multipart/form-data'
-	            }
+	            },
+							onUploadProgress: progressEvent => {
+								this.setState({per: parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))});
+							}
 	        };
 	        await axios.post("http://localhost:4000/serverport/upload",formData,config)
 	            .then((response) => {
@@ -58,10 +63,12 @@ export default class basic extends Component {
 									photo:this.state.img.name
 								});
 								localStorage.setItem("photo",this.state.img.name);
-								document.getElementById('passportPhoto').src = "http://localhost:4000/serverport/imgFile";
 								this.setState({img:null});
+								this.props.imageUploading(false);
 	            }).catch((error) => {
 								alert("File not uploaded... Try again");
+								this.setState({img:null});
+								this.props.imageUploading(false);
 	        });
 		}
 
@@ -69,7 +76,8 @@ export default class basic extends Component {
 			name: this.state.name,
 			email: this.state.email,
 			degree: this.state.degree,
-			linkedinid: this.state.linkedinid
+			linkedinid: this.state.linkedinid,
+			photo: this.state.photo
 		};
     this.props.submit(this.type, body);
   }
@@ -104,10 +112,9 @@ export default class basic extends Component {
 								</div>
 								<div className="col-6 align-self-center">
 								<figure className="figure">
-								{
+										{this.props.imageUploading(true) ? <Progress striped colored="success" value={this.state.per} /> : <React.Fragment></React.Fragment>}
 										<img className="figure-img rounded mx-auto d-block" width="70%" height="auto" id="passportPhoto"
 											src={`${"http://localhost:4000/serverport/imgFile"}?${Date.now()}`} alt="No Profile Pic" />
-								}
 									<figcaption className="text-center figure-caption ">
 										{this.state.photo ? "Passport Size Photo" : "Add Your Photo"}
 									</figcaption>
@@ -116,16 +123,23 @@ export default class basic extends Component {
 									this.state.photo === "" ? <React.Fragment></React.Fragment> :
 									 	<React.Fragment>
 											<button className="btn-danger" onClick={() => {
-												axios.post('http://localhost:4000/serverport/removePhoto')
+												this.props.imageUploading(false);
+												const configs = {
+													onUploadProgress: progressEvent => {
+														this.setState({per: parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))});
+													}
+												}
+
+												axios.post('http://localhost:4000/serverport/removePhoto',{},configs)
 												.then((response) => {
-													alert('removed');
 													this.setState({
 														photo: ""
 													});
 													localStorage.removeItem("photo");
-													document.getElementById('passportPhoto').src = "http://localhost:4000/serverport/imgFile";
+													this.props.imageUploading(false);
 												}).catch((error) => {
 													alert("Photo could not be removed... Try again" + error);
+													this.props.imageUploading(false);
 										});
 											}}>
 													Remove Photo
@@ -167,7 +181,7 @@ export default class basic extends Component {
 						</form>
 						</ModalBody>
 						<ModalFooter>
-							 <button type="submit" form="basicForm">Submit</button>
+							 <button type="submit" form="basicForm" disabled={this.props.imageUploading(true)}>Submit</button>
 							<Button color="secondary" onClick={this.toggle}>Cancel</Button>
 						</ModalFooter>
 					</Modal>
