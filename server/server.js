@@ -5,10 +5,12 @@ const PORT =  process.env.PORT || 4000;
 const cors = require('cors');
 const ServerPortRouter = require('./routes/ServerPortRoutes');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use('/serverport', ServerPortRouter);
 
 

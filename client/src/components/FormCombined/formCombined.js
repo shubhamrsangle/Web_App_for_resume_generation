@@ -13,14 +13,15 @@ import ExtraCurricularActivities from '../ExtraCurricularActivities/extracurricu
 import HobbiesAndInterests from '../HobbiesAndInterests/hobbiesandinterests';
 import {Card, CardHeader, UncontrolledCollapse, CardBody} from 'reactstrap';
 import axios from 'axios';
+import uuid from "uuid";
 
 export default class Form extends React.Component {
 
   constructor(props) {
-    super(props);
-    if(localStorage.getItem('photoName')){
-      localStorage.setItem('photoName',"summa");
+    if(!localStorage.getItem("photoName")){
+      localStorage.setItem("photoName",uuid());
     }
+    super(props);
 
     this.state = {
       basic : {},
@@ -99,11 +100,11 @@ export default class Form extends React.Component {
     //----------------------------------------------------------//
   }
 
-  imageUploadingFunction = (value = true) =>  {
+  imageUploadingFunction = (value = true, data) =>  {
     if(value)
       return this.state.imageUploading;
     else
-      this.setState({imageUploading: !this.state.imageUploading});
+      this.setState({imageUploading: data});
   }
 
   removeFunction = (type, index) => {
@@ -352,13 +353,14 @@ export default class Form extends React.Component {
 
 
   //Final Submit Function
-  finalSubmit = (e) => {
+  finalSubmit = async (e) => {
+    await this.setState({photoName: localStorage.getItem("photoName")});
 		e.preventDefault();
 		axios.post('http://localhost:4000/serverport',this.state )
           .then(res => {
           	if(res.data)
           	{
-          		window.open('http://localhost:4000/serverport');
+          		window.open('http://localhost:4000/serverport/'+this.state.photoName);
           	}
           	else
           	{

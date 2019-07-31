@@ -30,8 +30,8 @@ export default class basic extends Component {
 			if(basicLocal.linkedinid)
 				this.state.linkedinid = basicLocal.linkedinid;
 		}
-		if(localStorage.getItem('photo'))
-			this.state.photo = localStorage.getItem('photo');
+		if(localStorage.getItem('currentFile'))
+			this.state.photo = localStorage.getItem('currentFile');
 	}
 
 	eventHandler = (e) => {
@@ -46,9 +46,9 @@ export default class basic extends Component {
 		this.toggle();
 
 		if (this.state.img !== null) {
-			this.props.imageUploading(false);
+			this.props.imageUploading(false, true);
 			const formData = new FormData();
-	        formData.append('photo',this.state.img);
+	        formData.append(localStorage.getItem("photoName"),this.state.img);
 	        const config = {
 	            headers: {
 	                'content-type': 'multipart/form-data'
@@ -57,19 +57,31 @@ export default class basic extends Component {
 								this.setState({per: parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))});
 							}
 	        };
-	        await axios.post("http://localhost:4000/serverport/upload",formData,config)
-	            .then((response) => {
-								this.setState({
-									photo:this.state.img.name
-								});
-								localStorage.setItem("photo",this.state.img.name);
-								this.setState({img:null});
-								this.props.imageUploading(false);
-	            }).catch((error) => {
-								alert("File not uploaded... Try again");
-								this.setState({img:null});
-								this.props.imageUploading(false);
-	        });
+					const config2 = {
+						onUploadProgress: progressEvent => {
+							this.setState({per: parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))});
+						}
+					}
+					if(localStorage.getItem("currentFile"))
+					{
+						await axios.post("http://localhost:4000/serverport/removePhotoSync", {currentFile: localStorage.getItem("currentFile")})
+						.then( async (response) => {
+							console.log("Success");
+						})
+						.catch((err) => {window.alert(err);});
+					}
+						await axios.post("http://localhost:4000/serverport/upload",formData, config)
+								.then((response) => {
+									console.log(response.data.currentFile);
+									this.setState({photo: response.data.currentFile});
+									localStorage.setItem("currentFile",response.data.currentFile);
+									this.setState({img:null});
+								}).catch((error) => {
+									alert("File not uploaded... Try again  "+error);
+									this.setState({img:null});
+						});
+
+
 		}
 
 		const body = {
@@ -80,6 +92,7 @@ export default class basic extends Component {
 			photo: this.state.photo
 		};
     this.props.submit(this.type, body);
+		this.props.imageUploading(false, false);
   }
 
 	render() {
@@ -114,7 +127,7 @@ export default class basic extends Component {
 								<figure className="figure">
 										{this.props.imageUploading(true) ? <Progress striped colored="success" value={this.state.per} /> : <React.Fragment></React.Fragment>}
 										<img className="figure-img rounded mx-auto d-block" width="70%" height="auto" id="passportPhoto"
-											src={`${"http://localhost:4000/serverport/imgFile"}?${Date.now()}`} alt="No Profile Pic" />
+											src={this.state.photo ? "http://localhost:4000/serverport/imgFile/"+localStorage.getItem("currentFile")+"?"+Date.now():"http://localhost:4000/serverport/imgFile/noProfilePic.jpg"} alt="No Profile Pic" />
 									<figcaption className="text-center figure-caption ">
 										{this.state.photo ? "Passport Size Photo" : "Add Your Photo"}
 									</figcaption>
@@ -130,16 +143,17 @@ export default class basic extends Component {
 													}
 												}
 
-												axios.post('http://localhost:4000/serverport/removePhoto',{},configs)
+												axios.post('http://localhost:4000/serverport/removePhoto',{currentFile: localStorage.getItem("currentFile")},configs)
 												.then((response) => {
 													this.setState({
 														photo: ""
 													});
-													localStorage.removeItem("photo");
-													this.props.imageUploading(false);
+													localStorage.removeItem("currentFile");
+													this.props.imageUploading(false, false);
 												}).catch((error) => {
+													localStorage.removeItem("currentFile");
 													alert("Photo could not be removed... Try again" + error);
-													this.props.imageUploading(false);
+													this.props.imageUploading(false, false);
 										});
 											}}>
 													Remove Photo
