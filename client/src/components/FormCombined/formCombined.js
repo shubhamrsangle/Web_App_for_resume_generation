@@ -42,6 +42,14 @@ export default class Form extends React.Component {
     const basicLocal = JSON.parse(localStorage.getItem('basic'));
     if(basicLocal)
       this.state.basic = basicLocal;
+    else{
+      this.state.basic = {
+        degree: "B.Tech",
+        linkedinid: "",
+        name: "",
+        photo: "",
+      }
+    }
     //----------------------------------------------------------//
     //----------------------------------------------------------//
     const educationdetailsLocal = JSON.parse(localStorage.getItem('educationdetails'));
@@ -351,21 +359,27 @@ export default class Form extends React.Component {
     }
   }
 
-
+final
   //Final Submit Function
   finalSubmit = async (e) => {
-    await this.setState({photoName: localStorage.getItem("photoName")});
 		e.preventDefault();
-		axios.post('http://localhost:4000/serverport',this.state )
+
+    const body = {...this.state,photoName: localStorage.getItem("photoName"),photo: localStorage.getItem("currentFile")};
+    console.log(body);
+    axios.post('http://localhost:4000/serverport',body )
           .then(res => {
+            console.log(res);
           	if(res.data)
           	{
-          		window.open('http://localhost:4000/serverport/'+this.state.photoName);
+          		window.open('http://localhost:4000/serverport/'+localStorage.getItem("photoName"));
           	}
           	else
           	{
           		alert('Resource is Busy!!!Try After Sometimes...');
           	}
+          })
+          .catch((err)=>{
+            window.alert("Something went wrong in Server.Report the issue");
           });
 	}
 

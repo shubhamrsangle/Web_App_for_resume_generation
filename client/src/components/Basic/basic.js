@@ -11,7 +11,6 @@ export default class basic extends Component {
 		this.state = {
 			modal: false,
 			name: "",
-			email: "",
 			degree: "B.Tech",
 			photo: "",
 			linkedinid: "",
@@ -23,8 +22,6 @@ export default class basic extends Component {
 		{
 			if(basicLocal.name)
 				this.state.name = basicLocal.name;
-			if(basicLocal.email)
-				this.state.email = basicLocal.email;
 			if(basicLocal.degree)
 				this.state.degree = basicLocal.degree;
 			if(basicLocal.linkedinid)
@@ -57,22 +54,18 @@ export default class basic extends Component {
 								this.setState({per: parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))});
 							}
 	        };
-					const config2 = {
-						onUploadProgress: progressEvent => {
-							this.setState({per: parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total))});
-						}
-					}
+
 					if(localStorage.getItem("currentFile"))
 					{
 						await axios.post("http://localhost:4000/serverport/removePhotoSync", {currentFile: localStorage.getItem("currentFile")})
 						.then( async (response) => {
-							console.log("Success");
+							//console.log("Success");
 						})
-						.catch((err) => {window.alert(err);});
+						.catch((err) => {});
 					}
 						await axios.post("http://localhost:4000/serverport/upload",formData, config)
 								.then((response) => {
-									console.log(response.data.currentFile);
+									//console.log(response.data.currentFile);
 									this.setState({photo: response.data.currentFile});
 									localStorage.setItem("currentFile",response.data.currentFile);
 									this.setState({img:null});
@@ -86,7 +79,6 @@ export default class basic extends Component {
 
 		const body = {
 			name: this.state.name,
-			email: this.state.email,
 			degree: this.state.degree,
 			linkedinid: this.state.linkedinid,
 			photo: this.state.photo
@@ -111,9 +103,6 @@ export default class basic extends Component {
 								<ul className="list-group list-group-flush">
 									<li className="list-group-item">
 										<strong>Name</strong> : {this.props.fields.name}
-									</li>
-									<li className="list-group-item">
-										<strong>Email</strong> : {this.props.fields.email}
 									</li>
 									<li className="list-group-item">
 										<strong>Degree</strong> : {this.props.fields.degree}
@@ -178,8 +167,6 @@ export default class basic extends Component {
 						<form onSubmit={this.submit} id="basicForm" encType="multipart/form-data" name="basicForm">
 						 <input type="text" className="form-control" name={"name"} placeholder="Name" value={this.state.name}
 							onChange={this.eventHandler}/>
-						 <input type="email" className="form-control" name={"email"} placeholder="Email Id" value={this.state.email}
-							onChange = {this.eventHandler}/>
 						<div onChange = { (e) => {this.setState({degree: e.target.value});} }>
 		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="B.Tech"} value="B.Tech"/>B.Tech</label>
 		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="M.Tech"} value="M.Tech"/>M.Tech</label>
