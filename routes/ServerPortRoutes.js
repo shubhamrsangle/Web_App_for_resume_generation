@@ -159,7 +159,11 @@ let def3 = "linkcolor=magenta,\ncitecolor=blue,\nfilecolor=magenta,\nurlcolor=cy
 let mar = "\\addtolength{\\oddsidemargin}{-0.215in}\n\\addtolength{\\textwidth}{0.2in}\n\\definecolor{titleColor}{rgb}{0.85, 0.85, 0.85}\n\n";
 var logopath=path.join(__dirname,'logoupdated.png');
 logopath = logopath.split('\\').join('/');
-let basic_begin = "\\begin{table}[h!]\n\n\\begin{center}\n\\begin{tabular}{ p{1in}p{4.45in}p{0.8in}}\n\\raisebox{-1.05\\totalheight}{\\includegraphics[width=1.47in]{"+logopath+"}}\n&\n\\begin{itemize}\n\\setlength\\itemsep{.01em}\n";
+decimalIndex=logopath.lastIndexOf(".");
+pathStart=logopath.slice(0,decimalIndex);
+pathExte=logopath.slice(decimalIndex);
+console.log('{"'+pathStart+'"}'+pathExte);
+let basic_begin = "\\begin{table}[h!]\n\n\\begin{center}\n\\begin{tabular}{ p{1in}p{4.45in}p{0.8in}}\n\\raisebox{-1.05\\totalheight}{\\includegraphics[width=1.47in]{"+'{"'+pathStart+'"}'+pathExte+"}}\n&\n\\begin{itemize}\n\\setlength\\itemsep{.01em}\n";
 let basic_end1 = "\\end{itemize}\n";
 let basic_end3 = "\\end{tabular}\n\\end{center}\n\\end{table}\n\n\\vspace{-.8cm}\n\n";
 let educationDetails_begin1 = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Education Details}}}\n\\\\ \\\\\n";
@@ -227,7 +231,11 @@ function basic(basic, fileName, photo) {
     if(photo !== null){
       var profilepath=path.join(__dirname,'images', photo);
       profilepath = profilepath.split('\\').join('/');
-      let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+profilepath+"}}}\n";
+      decimalIndex=profilepath.lastIndexOf(".");
+	  pathStart=profilepath.slice(0,decimalIndex);
+	  pathExte=profilepath.slice(decimalIndex);
+	  console.log('{"'+pathStart+'"}'+pathExte);
+      let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+'{"'+pathStart+'"}'+pathExte+"}}}\n";
       fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', basic_end_photo);
     }
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', basic_end3);
