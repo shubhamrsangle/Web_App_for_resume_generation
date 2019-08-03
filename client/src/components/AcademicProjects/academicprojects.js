@@ -69,7 +69,7 @@ class AcademicProjects extends React.Component {
       projectname: this.state.projectname,
       projectduration: this.state.projectduration,
       projectguide: this.state.projectguide,
-      projectdescription: this.state.projectduration
+      projectdescription: this.state.projectdescription
     };
     this.editToggle(body,-1);
     this.props.editFunc(this.type, this.state.editIndex, body);
