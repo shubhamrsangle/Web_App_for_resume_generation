@@ -316,7 +316,7 @@ function publications(publications, fileName) {
 
 function academicProject(academicProject, fileName) {
     const fs = require('fs');
-    let ap = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Academic Projects}}}\n\n";
+    let ap = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Projects}}}\n\n";
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', ap);
     for (let i = 0; i < academicProject.length; i++) {
         let project_name = academicProject[i]['projectname'];
