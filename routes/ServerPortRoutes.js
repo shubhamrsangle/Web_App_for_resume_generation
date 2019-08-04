@@ -72,7 +72,6 @@ ServerPortRouter.route("/upload").post( async (req,res) => {
         if(req.cookies["currentFile"]){
           fs.unlinkAsync(__dirname,'images',req.cookies["currentFile"])
           .then(() => {
-
           })
           .catch(()=>console.log("Error"));
         }
@@ -141,6 +140,7 @@ function updateValueLatex(str) {
   str = str.split("{").join("\\{");
   str = str.split("}").join("\\}");
   str = str.split('"').join('\"');
+  str = str.split('&').join("\&");
   return str;
 }
 
@@ -167,7 +167,7 @@ let basic_begin = "\\begin{table}[h!]\n\n\\begin{center}\n\\begin{tabular}{ p{1i
 let basic_end1 = "\\end{itemize}\n";
 let basic_end3 = "\\end{tabular}\n\\end{center}\n\\end{table}\n\n\\vspace{-.8cm}\n\n";
 let educationDetails_begin1 = "\\colorbox{titleColor}{\\parbox{6.7in}{\\textbf{Education Details}}}\n\\\\ \\\\\n";
-let educationDetails_begin2 = "\\indent \\begin{tabular}{ l @{\\hskip 0.65in} l @{\\hskip 0.90in} l @{\\hskip 1.00in} l @{\\hskip 0.27in} l }\n";
+let educationDetails_begin2 = "\\indent \\begin{tabular}{p{2.3in} p{2.3in} p{0.6in} p{0.9in}}\n";
 let educationDetails_begin3 = "\\hline\n\\textbf{Program} & \\textbf{Institute} & \\textbf{Year} & \\textbf{\\%/CGPA} \\\\ \n \\hline\n\n";
 
 function make(raw) {
