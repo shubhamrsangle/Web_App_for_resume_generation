@@ -232,9 +232,9 @@ function basic(basic, fileName, photo) {
       var profilepath=path.join(__dirname,'images', photo);
       profilepath = profilepath.split('\\').join('/');
       decimalIndex=profilepath.lastIndexOf(".");
-	  pathStart=profilepath.slice(0,decimalIndex);
-	  pathExte=profilepath.slice(decimalIndex);
-	  console.log('{"'+pathStart+'"}'+pathExte);
+    pathStart=profilepath.slice(0,decimalIndex);
+    pathExte=profilepath.slice(decimalIndex);
+    console.log('{"'+pathStart+'"}'+pathExte);
       let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+'{"'+pathStart+'"}'+pathExte+"}}}\n";
       fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', basic_end_photo);
     }
@@ -326,10 +326,11 @@ function academicProject(academicProject, fileName) {
         fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\begin{itemize*}\n\\setlength{\\itemsep}{1pt}\n\\item \\textbf{${updateValueLatex(project_name)}}`);
         if (guide == "") {
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
-            fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\begin{itemize*}\n
-            \\item ${updateValueLatex(description)} \n
-            \\end{itemize*}\n
-            \\end{itemize*}\n\n`);
+            fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', '\\begin{itemize*}\n');
+            fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\setlength{\\itemsep}{.00pt}\n
+            \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
+            \\end{itemize*} \n
+            \\end{itemize*} \n\n`);
         }
         else {
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\n \\\\ {(\\textbf{Guide :} ${updateValueLatex(guide)})}`);
