@@ -127,7 +127,7 @@ ServerPortRouter.route('/:id').get( function (req, res) {
         console.log("error");
       }
       else{
-        fs.unlinkSync(path.join(__dirname,'tex',req.params.id+'.tex'));
+        //fs.unlinkSync(path.join(__dirname,'tex',req.params.id+'.tex'));
         fs.unlinkSync(path.join(__dirname,'pdf',req.params.id+'.pdf'));
       }
     });
