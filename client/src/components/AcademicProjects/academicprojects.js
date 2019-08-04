@@ -79,7 +79,7 @@ class AcademicProjects extends React.Component {
     return(
 			<Card>
         <CardHeader>
-        <button className="btn btn-link" id="academics">Academic Projects</button>
+        <button className="btn btn-link" id="academics">Projects</button>
         </CardHeader>
         <UncontrolledCollapse toggler="#academics"><CardBody>
 							<div className="row">
@@ -90,7 +90,7 @@ class AcademicProjects extends React.Component {
 													<div className="col-12 col-md-6 col-lg-4" key={"academicproject" + index}>
 													<div className="card col-auto">
 														<div className="card-header">
-															<h3 className="card-title">Academic Project No: {index + 1}</h3>
+															<h3 className="card-title">Project No: {index + 1}</h3>
 														</div>
 														<div className="card-body text-center">
 															<ul className="list-group list-group-flush">
@@ -112,7 +112,7 @@ class AcademicProjects extends React.Component {
 															<button className="btn-info col-6" onClick={() => this.editToggle(nan,index)}>Edit</button>
 
 															<Modal isOpen={this.state.editModal} toggle={()=>this.editToggle({},-1)} className={this.props.className}>
-																<ModalHeader toggle={this.editToggle}>Edit the Academic Project</ModalHeader>
+																<ModalHeader toggle={this.editToggle}>Edit the Project</ModalHeader>
 																<ModalBody>
 																<form onSubmit={(e) => {this.editFunc(e);}} id="editAcademicProject" name="editAcademicProject">
 																 <input type="text" className="form-control" name={"projectname"} placeholder="Project Name" value={this.state.projectname}
@@ -140,7 +140,7 @@ class AcademicProjects extends React.Component {
 									<div className="col-12">
 									<Button color="primary" onClick={this.toggle}>Add</Button>
 							 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-								 <ModalHeader toggle={this.toggle}>Add an Academic Project</ModalHeader>
+								 <ModalHeader toggle={this.toggle}>Add an Project</ModalHeader>
 								 <ModalBody>
 								 <form onSubmit={this.submit} id="academicproject" name="academicproject">
 									<input type="text" className="form-control" name={"projectname"} placeholder="Project Name"
