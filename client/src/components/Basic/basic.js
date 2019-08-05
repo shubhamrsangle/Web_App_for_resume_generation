@@ -57,13 +57,13 @@ export default class basic extends Component {
 
 					if(localStorage.getItem("currentFile"))
 					{
-						await axios.post("http://localhost:4000/serverport/removePhotoSync", {currentFile: localStorage.getItem("currentFile")})
+						await axios.post("http://10.21.6.242:4000/serverport/removePhotoSync", {currentFile: localStorage.getItem("currentFile")})
 						.then( async (response) => {
 							//console.log("Success");
 						})
 						.catch((err) => {});
 					}
-						await axios.post("http://localhost:4000/serverport/upload",formData, config)
+						await axios.post("http://10.21.6.242:4000/serverport/upload",formData, config)
 								.then((response) => {
 									//console.log(response.data.currentFile);
 									this.setState({photo: response.data.currentFile});
@@ -116,7 +116,7 @@ export default class basic extends Component {
 								<figure className="figure">
 										{this.props.imageUploading(true) ? <Progress striped colored="success" value={this.state.per} /> : <React.Fragment></React.Fragment>}
 										<img className="figure-img rounded mx-auto d-block" width="70%" height="auto" id="passportPhoto"
-											src={this.state.photo ? "http://localhost:4000/serverport/imgFile/"+localStorage.getItem("currentFile")+"?"+Date.now():"http://localhost:4000/serverport/imgFile/noProfilePic.jpg"} alt="No Profile Pic" />
+											src={this.state.photo ? "http://10.21.6.242:4000/serverport/imgFile/"+localStorage.getItem("currentFile")+"?"+Date.now():"http://10.21.6.242:4000/serverport/imgFile/noProfilePic.jpg"} alt="No Profile Pic" />
 									<figcaption className="text-center figure-caption ">
 										{this.state.photo ? "Passport Size Photo" : "Add Your Photo"}
 									</figcaption>
@@ -132,7 +132,7 @@ export default class basic extends Component {
 													}
 												}
 
-												axios.post('http://localhost:4000/serverport/removePhoto',{currentFile: localStorage.getItem("currentFile")},configs)
+												axios.post('http://10.21.6.242:4000/serverport/removePhoto',{currentFile: localStorage.getItem("currentFile")},configs)
 												.then((response) => {
 													this.setState({
 														photo: ""
@@ -167,10 +167,8 @@ export default class basic extends Component {
 						<form onSubmit={this.submit} id="basicForm" encType="multipart/form-data" name="basicForm">
 						 <input type="text" className="form-control" name={"name"} placeholder="Name" value={this.state.name}
 							onChange={this.eventHandler}/>
-						<div onChange = { (e) => {this.setState({degree: e.target.value});} }>
-		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="B.Tech"} value="B.Tech"/>B.Tech</label>
-		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="M.Tech"} value="M.Tech"/>M.Tech</label>
-		 				</div>
+						 <input type="text" className="form-control" name={"degree"} placeholder="B.Tech in Computer Science and Engineering" value={this.state.degree}
+							onChange={this.eventHandler}/>
 						 <input type="text" className="form-control" name={"linkedinid"} placeholder="LinkedIn Id" value={this.state.linkedinid}
 							onChange = {this.eventHandler}/>
 						<input type="file" className="form-control" name={"img"} id="img" accept="image/jpg"
