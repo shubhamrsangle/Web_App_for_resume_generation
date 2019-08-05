@@ -11,7 +11,7 @@ export default class basic extends Component {
 		this.state = {
 			modal: false,
 			name: "",
-			degree: "B.Tech",
+			degree: "",
 			photo: "",
 			linkedinid: "",
 			img: null,
@@ -167,10 +167,8 @@ export default class basic extends Component {
 						<form onSubmit={this.submit} id="basicForm" encType="multipart/form-data" name="basicForm">
 						 <input type="text" className="form-control" name={"name"} placeholder="Name" value={this.state.name}
 							onChange={this.eventHandler}/>
-						<div onChange = { (e) => {this.setState({degree: e.target.value});} }>
-		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="B.Tech"} value="B.Tech"/>B.Tech</label>
-		 					<label className="radio-inline"><input type="radio" name="degree" defaultChecked={this.state.degree==="M.Tech"} value="M.Tech"/>M.Tech</label>
-		 				</div>
+						 <input type="text" className="form-control" name={"degree"} placeholder="B.Tech in Computer Science and Engineering" value={this.state.degree}
+							onChange={this.eventHandler}/>
 						 <input type="text" className="form-control" name={"linkedinid"} placeholder="LinkedIn Id" value={this.state.linkedinid}
 							onChange = {this.eventHandler}/>
 						<input type="file" className="form-control" name={"img"} id="img" accept="image/jpg"
