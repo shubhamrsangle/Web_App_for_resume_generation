@@ -328,7 +328,7 @@ function academicProject(academicProject, fileName) {
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', '\\begin{itemize*}\n');
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\setlength{\\itemsep}{.00pt}\n
-            \\item ${updateValueLatex(description)} \n
+            \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
             \\end{itemize*} \n
             \\end{itemize*} \n\n`);
         }
