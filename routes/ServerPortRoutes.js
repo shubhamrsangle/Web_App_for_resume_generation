@@ -152,7 +152,7 @@ function finished(err)
 
 let str1 = "\\documentclass[a4paper,10pt]{article}\n\\usepackage{anysize}\n\\usepackage{amsmath}\n\\usepackage{amssymb}\n\\usepackage{graphicx}\n";
 let str2 = "\\usepackage[left=0.75in, right=0.75in, top=0.5in, bottom=0.75in, includefoot, headheight=13.6pt]{geometry}\n\\usepackage{color,graphicx}\n\\usepackage{verbatim}\n";
-let str3 = "\\usepackage{hyperref}\n\\usepackage{multirow}\n\\usepackage{latexsym}\n\\usepackage{mdwlist}\n\\usepackage{tabularx}\n\\renewcommand{\\labelitemii}{$\\circ$}\n\n\n\n";
+let str3 = "\\usepackage{hyperref}\n\\usepackage{multirow}\n\\usepackage{latexsym}\n\\usepackage{mdwlist}\n\\usepackage{tabularx}\n\\renewcommand{\\labelitemii}{$\\circ$}\n\\renewcommand{\\baselinestretch}{1.15}\n\n\n\n";
 let def1 = "\\hypersetup{\nbookmarks=true, \nunicode=false, \npdftoolbar=true, \npdfmenubar=true,\n";
 let def2 = "pdffitwindow=true,\npdftitle={CV - XYZ},\n pdfauthor={Newton}, \npdfsubject={Placements IITTP},\ncolorlinks=true,\n";
 let def3 = "linkcolor=magenta,\ncitecolor=blue,\nfilecolor=magenta,\nurlcolor=cyan\n}\n\n\n";
@@ -290,7 +290,7 @@ function technicalProficiency(technicalProficiency, fileName) {
         let tem = `\\textbf{\\small{${updateValueLatex(title)}}} &: &{{${updateValueLatex(values)}}} \\\\\n`;
         fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', tem);
     }
-    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', "\\end{tabular}\n\n");
+    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', "\\end{tabular}\\\\\n\n");
 }
 
 function publications(publications, fileName) {
@@ -366,7 +366,7 @@ function experience(experience, fileName) {
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\hfill {\\small{{\\textbf{[${updateValueLatex(duration)}]}}\\/}}\n`);
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', '\\begin{itemize*}\n');
             fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\setlength{\\itemsep}{.00pt}\n
-            \\item \\textbf{Abstract}: ${updateValueLatex(description)} \n
+            \\item ${updateValueLatex(description)} \n
             \\end{itemize*} \n
             \\end{itemize*} \n\n`);
         }
@@ -385,9 +385,10 @@ function relevantCourses(relevantCourses, fileName) {
         }
         fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\hspace{0.9pc}$\\bullet$ ${updateValueLatex(course1)}`)
         if (course2 != "") fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `&$\\bullet$ ${updateValueLatex(course2)}\\\\[0.05in]\n`);
-        else fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', '\n');
+        else fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', '\\\\[0.05in]\n');
     }
-    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\end{tabular}\n\n`);
+    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\end{tabular}\n\n\n`);
+    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\textbf{\* To be completed in December 2019}\n\n\n`);
 }
 
 function achievements(achievements, fileName) {
