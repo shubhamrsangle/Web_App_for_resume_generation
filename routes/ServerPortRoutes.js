@@ -195,11 +195,11 @@ function make(raw) {
     if (raw['publications'].length>0) {
         publications(raw['publications'],raw['photoName']);  // uncomment when publications component is fixed
     }
-    if(raw['academicprojects'].length>0){
-        academicProject(raw['academicprojects'],raw['photoName']);
-    }
     if(raw['experience'].length>0){
         experience(raw['experience'],raw['photoName']);
+    }
+    if(raw['academicprojects'].length>0){
+        academicProject(raw['academicprojects'],raw['photoName']);
     }
     if(raw['courses'].length>0){
         relevantCourses(raw['courses'],raw['photoName']);
