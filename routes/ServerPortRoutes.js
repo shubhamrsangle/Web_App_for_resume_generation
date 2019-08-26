@@ -140,7 +140,8 @@ function updateValueLatex(str) {
   str = str.split("{").join("\\{");
   str = str.split("}").join("\\}");
   str = str.split('"').join('\"');
-  str = str.split('&').join("\&");
+  str = str.split('&').join("\\&");
+  str = str.split('#').join("\\#");
   return str;
 }
 
@@ -226,7 +227,7 @@ function basic(basic, fileName, photo) {
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\item[] \\textbf{${updateValueLatex(basic['degree'])}}\n`)
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\item[] \\textbf{${"Indian Institute of Technology Tirupati, India"}}\n`)
 //    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\item[] \\textbf{${updateValueLatex(basic['email'])}}\n`)
-    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\item[] \\textbf{\\url{${updateValueLatex(basic['linkedinid'])}}}\n`)
+    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\item[] \\textbf{\\url{${"https://www.linkedin.com/in/"+updateValueLatex(basic['linkedinid'])}}}\n`)
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', basic_end1);
     if(photo !== null){
       var profilepath=path.join(__dirname,'images', photo);
