@@ -390,7 +390,7 @@ function relevantCourses(relevantCourses, fileName) {
         else fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', '\\\\[0.05in]\n');
     }
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\end{tabular}\n\n\n`);
-    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\textbf{\*\* To be completed in December 2019}\n\n\n`);
+    fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', `\\textbf{\*\* To be completed in May 2020}\n\n\n`);
 }
 
 function achievements(achievements, fileName) {
