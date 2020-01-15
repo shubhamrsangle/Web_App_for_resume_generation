@@ -57,13 +57,13 @@ export default class basic extends Component {
 
 					if(localStorage.getItem("currentFile"))
 					{
-						await axios.post("http://localhost:4000/serverport/removePhotoSync", {currentFile: localStorage.getItem("currentFile")})
+						await axios.post("/serverport/removePhotoSync", {currentFile: localStorage.getItem("currentFile")})
 						.then( async (response) => {
 							//console.log("Success");
 						})
 						.catch((err) => {});
 					}
-						await axios.post("http://localhost:4000/serverport/upload",formData, config)
+						await axios.post("/serverport/upload",formData, config)
 								.then((response) => {
 									//console.log(response.data.currentFile);
 									this.setState({photo: response.data.currentFile});
@@ -116,7 +116,7 @@ export default class basic extends Component {
 								<figure className="figure">
 										{this.props.imageUploading(true) ? <Progress striped colored="success" value={this.state.per} /> : <React.Fragment></React.Fragment>}
 										<img className="figure-img rounded mx-auto d-block" width="70%" height="auto" id="passportPhoto"
-											src={this.state.photo ? "http://localhost:4000/serverport/imgFile/"+localStorage.getItem("currentFile")+"?"+Date.now():"http://localhost:4000/serverport/imgFile/noProfilePic.jpg"} alt="No Profile Pic" />
+											src={this.state.photo ? "/serverport/imgFile/"+localStorage.getItem("currentFile")+"?"+Date.now():"/serverport/imgFile/noProfilePic.jpg"} alt="No Profile Pic" />
 									<figcaption className="text-center figure-caption ">
 										{this.state.photo ? "Passport Size Photo" : "Add Your Photo"}
 									</figcaption>
@@ -132,7 +132,7 @@ export default class basic extends Component {
 													}
 												}
 
-												axios.post('http://localhost:4000/serverport/removePhoto',{currentFile: localStorage.getItem("currentFile")},configs)
+												axios.post('/serverport/removePhoto',{currentFile: localStorage.getItem("currentFile")},configs)
 												.then((response) => {
 													this.setState({
 														photo: ""

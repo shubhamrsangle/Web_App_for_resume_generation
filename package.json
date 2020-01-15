@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Web app for generating resume",
   "main": "server.js",
-  "engines":{
-    "node":"10.3.0",
-    "npm":"6.9.0"
+  "engines": {
+    "node": "10.3.0",
+    "npm": "6.9.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

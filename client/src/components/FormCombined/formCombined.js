@@ -366,12 +366,12 @@ final
 
     const body = {...this.state,photoName: localStorage.getItem("photoName"),photo: localStorage.getItem("currentFile")};
     console.log(body);
-    axios.post('http://localhost:4000/serverport',body )
+    axios.post('/serverport',body )
           .then(res => {
             console.log(res);
           	if(res.data)
           	{
-          		window.open('http://localhost:4000/serverport/'+localStorage.getItem("photoName"));
+          		window.open('/serverport/'+localStorage.getItem("photoName"));
           	}
           	else
           	{
