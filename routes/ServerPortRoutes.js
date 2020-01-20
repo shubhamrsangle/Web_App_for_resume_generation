@@ -237,7 +237,7 @@ function basic(basic, fileName, photo) {
     pathStart=profilepath.slice(0,decimalIndex);
     pathExte=profilepath.slice(decimalIndex);
     console.log('{"'+pathStart+'"}'+pathExte);
-      let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{{"+'{"'+pathStart+'"}'+pathExte+"}}}\n";
+      let basic_end_photo = "&\n\\raisebox{-0.8\\totalheight}{\\includegraphics[width=1in,height=1.3in]{"+'{"'+pathStart+'"}'+pathExte+"}}\n";
       fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', basic_end_photo);
     }
     fs.appendFileSync(path.join('./routes/tex', fileName) + '.tex', basic_end3);
